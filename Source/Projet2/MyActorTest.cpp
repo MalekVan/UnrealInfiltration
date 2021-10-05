@@ -25,18 +25,56 @@ void AMyActorTest::BeginPlay()
 	FActorSpawnParameters SpwnParams;
 	if(World)
 	{
-		ASecondActor = World->SpawnActor<AActor>(ASecondActorClass, this->GetActorLocation() + FVector(50.f,0.f,0.f), FRotator(0.0f,0.0f,0.0f), SpwnParams);
+		ASecondActor = World->SpawnActor<AActor>(ASecondActorClass, FVector(0.f,1000.f,200.f), FRotator(0.0f,0.0f,0.0f), SpwnParams);
 	}
+	OtherMeshComponent = Cast<UStaticMeshComponent>(ASecondActor->GetComponentByClass(UStaticMeshComponent::StaticClass()));
+
+	OtherMeshComponent->OnComponentHit.AddUniqueDynamic(this, &AMyActorTest::OnHit);
 	
 	MeshComponent->OnComponentBeginOverlap.AddUniqueDynamic(this, &AMyActorTest::OnStaticMeshBeginOverlap);
 	MeshComponent->OnComponentEndOverlap.AddUniqueDynamic(this, &AMyActorTest::StaticMeshBoxOnOverlapEnd);
+
+	StartPosition = ASecondActor->GetActorLocation();
+	EndPosition = StartPosition + FVector(500,0,0);
+	
+	DirectionEndPosition = (EndPosition - StartPosition);
+	DirectionEndPosition.Normalize();
+	
+	DirectionStartPosition = (StartPosition - EndPosition);
+	DirectionStartPosition.Normalize();
 }
 
 // Called every frame
 void AMyActorTest::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	ASecondActor->SetActorRelativeLocation(ASecondActor->GetActorLocation() + FVector(1,0,0) * MovementSpeed *  DeltaTime);
+	
+	if(ASecondActor)
+	{
+		if(bCanMove)
+		{
+			FVector Direction = ASecondActor->GetActorLocation() + ASecondActor->GetActorForwardVector();
+			if(Direction.Equals(ASecondActor->GetActorLocation() + DirectionEndPosition)) // Si on se dirige vers la position de fin
+			{
+				if(ASecondActor->GetActorLocation().X >= EndPosition.X)
+				{
+					ASecondActor->SetActorRotation(FRotator(0.0f, 180.0f, 0.0f));
+				} else
+				{
+					ASecondActor->SetActorLocation(FVector(Direction.X + Direction.X * DeltaTime, Direction.Y, Direction.Z));
+				}
+			} else if(Direction.Equals(ASecondActor->GetActorLocation() + DirectionStartPosition)) // Si on se dirige vers la position de départ
+				{
+				if(ASecondActor->GetActorLocation().X <= StartPosition.X)
+				{
+					ASecondActor->SetActorRotation(FRotator(0.0f, 0.0f, 0.0f));
+				} else
+				{
+					ASecondActor->SetActorLocation(FVector( Direction.X - Direction.X * DeltaTime, Direction.Y, Direction.Z));
+				}
+			}
+		}		
+	}
 }
 
 void AMyActorTest::OnStaticMeshBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
@@ -47,4 +85,9 @@ void AMyActorTest::OnStaticMeshBeginOverlap(UPrimitiveComponent* OverlappedCompo
 void AMyActorTest::StaticMeshBoxOnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	//ASecondActor->SetActorHiddenInGame(true);
+}
+
+void AMyActorTest::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit )
+{
+	bCanMove = false;
 }
