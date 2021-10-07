@@ -27,14 +27,25 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		TSubclassOf<AActor> ASecondActorClass;
 	
-	AActor* ASecondActor;
-	float MovementSpeed = 5;
+	AActor* ASecondActor;	
+	UStaticMeshComponent* OtherMeshComponent;
+	
+	float fMovementSpeed = 5;
+	bool bCanMove = true;
+
+	FVector StartPosition;
+	FVector EndPosition;
+	FVector DirectionStartPosition;
+	FVector DirectionEndPosition;
 
 	UFUNCTION()
 		void OnStaticMeshBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 	
 	UFUNCTION()
 		void StaticMeshBoxOnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	UFUNCTION()
+		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit );
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

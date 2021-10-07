@@ -10,6 +10,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
+#include "Collectible.h"
+#include "Interactable.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AProjet2Character
@@ -58,6 +60,8 @@ void AProjet2Character::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	
+	PlayerInputComponent->BindAction("Interact", IE_Released, this, &AProjet2Character::Interact);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AProjet2Character::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AProjet2Character::MoveRight);
@@ -281,4 +285,41 @@ void AProjet2Character::MoveRight(float Value)
 	}
 }
 
+void AProjet2Character::Interact()
+{
+	/**UE_LOG(LogTemp, Warning, TEXT("Interact"));
 
+	// Detection de tous les AInteractable autour du joueur
+	TArray<AActor*> OverlappingActors;
+	GetOverlappingActors(OverlappingActors, AInteractable::StaticClass());
+	
+	if(OverlappingActors.Num() == 1) // S'il n'y en a qu'un, on interagit avec
+	{
+		if(AInteractable* InteractableActor = Cast<AInteractable>(OverlappingActors.GetData()))
+		{
+			InteractableActor->Interact();
+		}
+	} else if(OverlappingActors.Num() > 1) // S'il y en a plusieurs, on interagit avec le plus proche
+	{                                                                                 
+		float ClosestDistance = 1000;
+		AActor* ClosestActor = nullptr;
+		for (AActor* Actor : OverlappingActors)
+		{
+			float Distance = GetDistanceBetweenVectors(this->GetActorLocation(), Actor->GetActorLocation());
+			if(Distance < ClosestDistance)
+			{
+				ClosestDistance = Distance;
+				ClosestActor = Actor;
+			}
+		}
+		if(AInteractable* InteractableActor = Cast<AInteractable>(ClosestActor))
+		{
+			InteractableActor->Interact();
+		}
+	}*/
+}
+
+float AProjet2Character::GetDistanceBetweenVectors(FVector From, FVector To)
+{
+	return (sqrt(pow(To.X - From.X, 2) - pow(To.Y - From.Y, 2) - pow(To.Z - From.Z, 2)));
+}
