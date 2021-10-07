@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AnimationClassForJoris.h"
 #include "GameFramework/Character.h"
 #include "Projet2Character.generated.h"
 
@@ -10,7 +11,7 @@ UCLASS(config=Game)
 class AProjet2Character : public ACharacter
 {
 	GENERATED_BODY()
-
+		
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
@@ -18,6 +19,7 @@ class AProjet2Character : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
+
 public:
 	AProjet2Character();
 
@@ -29,10 +31,51 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	USkeletalMeshComponent* ComponentSkeletalMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UAnimationClassForJoris * AnimInstanceOfSkeletalMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UStaticMeshComponent* ComponentStaticMeshTonneau;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	USpringArmComponent* ComponentCameraBoom;
+
 protected:
 
 	/** Resets HMD orientation in VR. */
 	void OnResetVR();
+	
+	virtual void BeginPlay() override;
+
+	//Controller
+	void TakeButtonReleased();
+	void TakeButtonPressed();
+
+	void RunButtonReleased();
+	void RunButtonPressed();
+
+	void ZoomIn();
+	void ZoomOut();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool isCarry;
+
+	//CAMERA VARIABLES
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 MaxCameraZoom;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 MinCameraZoom;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 StepOfWheeling;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 SpeedOfWheeling;
+
+	float FuturValueOfZoom;
+
+	virtual void Tick(float deltaTime) override;
 
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
