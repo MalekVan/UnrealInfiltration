@@ -57,6 +57,10 @@ protected:
 
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
+	
+	void Interact();
+
+	static float GetDistanceBetweenVectors(FVector From, FVector To);
 
 protected:
 	// APawn interface
