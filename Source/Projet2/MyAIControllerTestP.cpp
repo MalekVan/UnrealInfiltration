@@ -18,7 +18,6 @@ AMyAIControllerTestP::AMyAIControllerTestP()
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
  
 	LocationToGoKey = "LocationToGo";
- 
 }
  
 void AMyAIControllerTestP::OnPossess(APawn* InPawn)
