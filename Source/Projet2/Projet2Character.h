@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AnimationClassForJoris.h"
+#include "Collectible.h"
 #include "GameFramework/Character.h"
 #include "Projet2Character.generated.h"
 
@@ -64,6 +65,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool isCarry;
+
+	ACollectible* HoldedCollectible = nullptr;
 
 	//CAMERA VARIABLES
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
