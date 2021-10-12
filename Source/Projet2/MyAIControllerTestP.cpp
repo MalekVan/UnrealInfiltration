@@ -9,40 +9,37 @@
 #include "BehaviorTree/BehaviorTree.h"
 
 
-AMyAIControllerTestP::AMyAIControllerTestP()
+AMyAIControllerTestP::AMyAIControllerTestP() //Constructeur
 {
-	//Initialize BehaviorTreeComponent, BlackboardComponent and the corresponding key
- 
 	BehaviorComp = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorComp"));
- 
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
  
 	LocationToGoKey = "LocationToGo";
+	DetectPlayerKey = "DetectPlayer";
 }
- 
+
+
 void AMyAIControllerTestP::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
  
 	//Get the possessed Character and check if it's my own AI Character
 	AAICharacterTestP* AIChar = Cast<AAICharacterTestP>(InPawn);
- 
+
+	//Si notre character existe alors on peut avoir une référence vers son blackboard + son BehaviourTree. 
 	if (AIChar)
 	{
-		//If the blackboard is valid initialize the blackboard for the corresponding behavior tree
-		if (AIChar->BehaviorTree->BlackboardAsset)
+		if (AIChar->BehaviorTree->BlackboardAsset) //Avoir la référence vers notre Blackboard.
 		{
 			BlackboardComp->InitializeBlackboard(*(AIChar->BehaviorTree->BlackboardAsset));
 		}
- 
-		/*Populate the array of available bot target points
-		The following function needs a TArray of AActors, that's why I declared the
-		BotTargetPoints as such. When I will need to get an exact point and compare it,
-		I will cast it to the corresponding class (ABotTargetPoint)*/
+		if (AIChar->BehaviorTree) //Avoir la référence vers notre BehaviourTree
+		{
+			BehaviorComp->StartTree(*AIChar->BehaviorTree);
+		}
+
+		//Remplir le tableau avec tout les targets points dispos.
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABotTargetPointTestP::StaticClass(), BotTargetPoints);
- 
-		//Start the behavior tree which corresponds to the specific character
-		BehaviorComp->StartTree(*AIChar->BehaviorTree);
 	}
 }
 

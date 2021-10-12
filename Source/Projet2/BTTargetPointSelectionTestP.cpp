@@ -37,8 +37,9 @@ EBTNodeResult::Type UBTTargetPointSelectionTestP::ExecuteTask(UBehaviorTreeCompo
 		//Update the next location in the Blackboard so the bot can move to the next Blackboard value
 		BlackboardComp->SetValueAsObject("LocationToGo", NextTargetPoint);
  
-		//At this point, the task has been successfully completed
+		//TASK est un succes
 		return EBTNodeResult::Succeeded;
 	}
+	//TASK est un échec
 	return EBTNodeResult::Failed;
 }
