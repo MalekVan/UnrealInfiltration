@@ -33,7 +33,8 @@ void ACollectible::Interact()
 }
 
 void ACollectible::Pickup()
-{
+{	
+	UE_LOG(LogClass, Log, TEXT("Interact with %s"), *GetName());
 	if(!bIsCarried)
 	{
 		
