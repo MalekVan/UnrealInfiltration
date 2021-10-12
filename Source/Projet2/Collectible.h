@@ -33,4 +33,5 @@ public:
 	void Interact() override;
 
 	virtual void Pickup();
+	virtual void Drop();
 };

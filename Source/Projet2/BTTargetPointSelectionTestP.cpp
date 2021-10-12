@@ -1,10 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "BTTargetPointSelectionTestP.h"
 #include "BotTargetPointTestP.h"
 #include "MyAIControllerTestP.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "BTTargetPointSelectionTestP.h"
-
 
 EBTNodeResult::Type UBTTargetPointSelectionTestP::ExecuteTask(UBehaviorTreeComponent & OwnerComp, uint8 * NodeMemory)
 {
