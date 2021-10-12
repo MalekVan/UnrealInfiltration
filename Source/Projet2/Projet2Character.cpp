@@ -287,34 +287,57 @@ void AProjet2Character::MoveRight(float Value)
 
 void AProjet2Character::Interact()
 {
-	// Detection de tous les AInteractable autour du joueur
-	TArray<AActor*> OverlappingActors = TArray<AActor*>();
-	GetOverlappingActors(OverlappingActors, AInteractable::StaticClass());
-	
-	if(OverlappingActors.Num() == 1) // S'il n'y en a qu'un, on interagit avec
+	if(!isCarry)
 	{
-		if(AInteractable* InteractableActor = Cast<AInteractable>(*OverlappingActors.GetData()))
+		// Detection de tous les AInteractable autour du joueur
+		TArray<AActor*> OverlappingActors = TArray<AActor*>();
+		GetOverlappingActors(OverlappingActors, AInteractable::StaticClass());
+	
+		if(OverlappingActors.Num() == 1) // S'il n'y en a qu'un, on interagit avec
 		{
-			InteractableActor->Interact();
-		}
-	} else if(OverlappingActors.Num() > 1) // S'il y en a plusieurs, on interagit avec le plus proche
-	{                                                                                 
-		float ClosestDistance = 9001;
-		AActor* ClosestActor = nullptr;
-		for (AActor* Actor : OverlappingActors)
-		{
-			float Distance = GetDistanceBetweenVectors(this->GetActorLocation(), Actor->GetActorLocation());
-			if(Distance < ClosestDistance)
+			UE_LOG(LogClass, Log, TEXT("Interact1"));
+			AActor* OverlappedActor = *OverlappingActors.GetData();
+			if(AInteractable* InteractableActor = Cast<AInteractable>(OverlappedActor))
 			{
-				ClosestDistance = Distance;
-				ClosestActor = Actor;
+				UE_LOG(LogClass, Log, TEXT("Interact2"));
+				if(OverlappedActor->IsA(ACollectible::StaticClass()))
+				{
+					UE_LOG(LogClass, Log, TEXT("Interact3"));
+					HoldedCollectible = Cast<ACollectible>(OverlappedActor);
+				}
+				InteractableActor->Interact();
+			}
+		} else if(OverlappingActors.Num() > 1) // S'il y en a plusieurs, on interagit avec le plus proche
+		{
+			float ClosestDistance = 9001;
+			AActor* ClosestActor = nullptr;
+			for (AActor* Actor : OverlappingActors)
+			{
+				float Distance = GetDistanceBetweenVectors(this->GetActorLocation(), Actor->GetActorLocation());
+				if(Distance < ClosestDistance)
+				{
+					ClosestDistance = Distance;
+					ClosestActor = Actor;
+				}
+			}
+			if(AInteractable* InteractableActor = Cast<AInteractable>(ClosestActor))
+			{
+				if(ClosestActor->IsA(ACollectible::StaticClass()))
+				{
+					HoldedCollectible = Cast<ACollectible>(ClosestActor);
+				}				
+				InteractableActor->Interact();
 			}
 		}
-		if(AInteractable* InteractableActor = Cast<AInteractable>(ClosestActor))
-		{
-			InteractableActor->Interact();
-		}
-	}
+		isCarry = true;
+		AnimInstanceOfSkeletalMesh->IsCarry = isCarry;
+	} else
+	{
+		HoldedCollectible->Drop();
+		HoldedCollectible = nullptr;
+		isCarry = false;
+		AnimInstanceOfSkeletalMesh->IsCarry = isCarry;
+	}	
 }
 
 float AProjet2Character::GetDistanceBetweenVectors(FVector From, FVector To)
