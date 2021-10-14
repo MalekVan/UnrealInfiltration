@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BTTargetPointSelectionTestP.h"
+
+#include "AICharacterTestP.h"
 #include "BotTargetPointTestP.h"
 #include "MyAIControllerTestP.h"
 #include "BehaviorTree/BlackboardComponent.h"
@@ -26,6 +28,7 @@ EBTNodeResult::Type UBTTargetPointSelectionTestP::ExecuteTask(UBehaviorTreeCompo
 		else
 		{
 			BlackboardComp->SetValueAsBool("GoBackToBase", true);
+			Cast<AAICharacterTestP>(AICon->GetCharacter())->GoBackToZone = true;
 			return EBTNodeResult::Failed;
 
 		}

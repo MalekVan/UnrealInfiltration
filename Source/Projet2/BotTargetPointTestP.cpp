@@ -10,16 +10,10 @@
 ABotTargetPointTestP::ABotTargetPointTestP()
 {
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
-	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &ABotTargetPointTestP::OnBoxBeginOverlap);
 	BoxCollision->SetupAttachment(RootComponent);
 	BoxCollision->SetRelativeLocation(FVector(0.0,.0,.0));
 
-	//a voir avec Etienne
+	//ETIENNE
 	//SocleMesh  = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SocleMesh"));
 	//SocleMesh->SetupAttachment(RootComponent);
-	
-}
-
-void ABotTargetPointTestP::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
 }

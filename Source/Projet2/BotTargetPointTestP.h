@@ -23,8 +23,4 @@ class PROJET2_API ABotTargetPointTestP : public ATargetPoint
 	class UStaticMeshComponent* SocleMesh;
 	
 	bool FruitOnThisTargetPoint = false;
-
-	UFUNCTION()
-	void OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	
 };

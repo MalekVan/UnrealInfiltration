@@ -33,6 +33,7 @@ void ASpawnerOfIA::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor
 	{
 		if (charaIA->GoBackToZone == true)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("GO BACK TO ZONE"));
 			charaIA->Destroy();
 			AProjet2GameMode* Gamemode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
 			Gamemode->NumberOfEnnemySpawn--;
