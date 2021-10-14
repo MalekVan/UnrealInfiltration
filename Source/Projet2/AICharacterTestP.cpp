@@ -56,7 +56,7 @@ void AAICharacterTestP::OnPerceptionUpdatedDelegate(AActor* Actor, FAIStimulus S
 void AAICharacterTestP::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 }
 
 // Called to bind functionality to input

@@ -8,6 +8,7 @@
 #include "GameFramework/Character.h"
 #include "AICharacterTestP.generated.h"
 
+
 UCLASS()
 class PROJET2_API AAICharacterTestP : public ACharacter
 {
