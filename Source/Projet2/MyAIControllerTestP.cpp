@@ -18,6 +18,8 @@ AMyAIControllerTestP::AMyAIControllerTestP() //Constructeur
  
 	LocationToGoKey = "LocationToGo";
 	DetectPlayerKey = "DetectPlayer";
+
+	ListOfDestinationPoints = TArray<ABotTargetPointTestP*>();
 }
 
 

@@ -9,7 +9,7 @@
 EBTNodeResult::Type UBTDropFruit::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	AMyAIControllerTestP* AICon = Cast<AMyAIControllerTestP>(OwnerComp.GetAIOwner());
-	AAICharacterTestP* IAchara = Cast<AAICharacterTestP>(AICon)
+	AAICharacterTestP* IAchara = Cast<AAICharacterTestP>(AICon->GetCharacter());
 	if (AICon && IAchara)
 	{
 		if (IAchara->HaveFruit)
