@@ -5,6 +5,7 @@
 #include "Collectible.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "MyAIControllerTestP.h"
+
 #include "BehaviorTree/BehaviorTree.h"
 
 // Sets default values
@@ -21,18 +22,7 @@ AAICharacterTestP::AAICharacterTestP()
 void AAICharacterTestP::BeginPlay()
 {
 	Super::BeginPlay();
-	AProjet2GameMode* Gamemode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
 	
-	if(Gamemode->NumberOfFruitsSpawn < Gamemode->NumberOfFruitsMax)
-	{
-		HaveFruit = true;
-		//faire spawn le fruit dans le socket correspondant.
-		AttachAFruitToSocket(CreateFruit());
-	}
-	else
-	{
-		HaveFruit = false;
-	}
 }
 
 void AAICharacterTestP::OnPerceptionUpdatedDelegate(AActor* Actor, FAIStimulus Stimulus)
@@ -66,6 +56,7 @@ void AAICharacterTestP::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void AAICharacterTestP::AttachAFruitToSocket(ACollectible* collectible)
 {
+	UE_LOG(LogTemp, Warning, TEXT("ATTACH FRUIT TO SOCKET"));
 	collectible->Pickup(this);
 	Fruit = collectible;
 }
@@ -75,18 +66,23 @@ ACollectible* AAICharacterTestP::CreateFruit()
 	FRotator Rotation(0.0f, 0.0f, 0.0f);
 	FActorSpawnParameters SpawnInfo;
 	ACollectible* fruitt =  GetWorld()->SpawnActor<ACollectible>(collectibleClass, this->GetActorLocation(), Rotation, SpawnInfo);
+	UE_LOG(LogTemp, Warning, TEXT("CREATE FRUIT"));
+
+	AProjet2GameMode* Gamemode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
+	Gamemode->NumberOfFruitsSpawn ++;
 	return fruitt;
 }
 
 void AAICharacterTestP::PutDownAFruit()
 {
-	UE_LOG(LogTemp, Warning, TEXT("PUT DOWN A FRUIT"));
 	if (Fruit)
 	{
 		Fruit->Drop();
+		Fruit = nullptr;
 		GoBackToZone = true;
 		UBlackboardComponent* BlackboardComponent = Cast<AMyAIControllerTestP>(GetController())->GetBlackboardComp();
 		BlackboardComponent->SetValueAsBool(TEXT("GoBackToBase"), true);
+		UE_LOG(LogTemp, Warning, TEXT("PUT DOWN A FRUIT"));
 	}
 }
 
