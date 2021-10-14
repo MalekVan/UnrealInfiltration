@@ -37,7 +37,7 @@ class PROJET2_API AMyAIControllerTestP : public AAIController
  
 	/*----------Constructor----------*/
 	AMyAIControllerTestP();
- 
+	
 	UBlackboardComponent* GetBlackboardComp() const { return BlackboardComp; }
  
 	TArray<AActor*> GetAvailableTargetPoints() { return BotTargetPoints; }

@@ -3,8 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Collectible.h"
+#include "Perception/AIPerceptionComponent.h"
 #include "GameFramework/Character.h"
 #include "AICharacterTestP.generated.h"
+
 
 UCLASS()
 class PROJET2_API AAICharacterTestP : public ACharacter
@@ -22,11 +25,31 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
+	void OnPerceptionUpdatedDelegate(AActor* Actor, FAIStimulus Stimulus);
+
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
+	void AttachAFruitToSocket(ACollectible* collectible);
+	ACollectible* CreateFruit();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "CollectibleToSpawn")
+	TSubclassOf<ACollectible> collectibleClass;
+	
+	void PutDownAFruit();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta=(AllowPrivateAcesse = "true"))
+	class UAIPerceptionComponent* PerceptionComponent;
+	
+	class ACollectible* Fruit;
+
+	bool IsDetecting;
+	bool HaveFruit;
+	bool GoBackToZone;
 };

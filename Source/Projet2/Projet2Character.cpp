@@ -308,7 +308,7 @@ void AProjet2Character::Interact()
 					UE_LOG(LogClass, Log, TEXT("Interact3"));
 					HoldedCollectible = Cast<ACollectible>(OverlappedActor);
 				}
-				InteractableActor->Interact();
+				InteractableActor->Interact(this);
 			}
 		} else if(OverlappingActors.Num() > 1) // S'il y en a plusieurs, on interagit avec le plus proche
 		{
@@ -329,7 +329,7 @@ void AProjet2Character::Interact()
 				{
 					HoldedCollectible = Cast<ACollectible>(ClosestActor);
 				}				
-				InteractableActor->Interact();
+				InteractableActor->Interact(this);
 			}
 		}
 		isCarry = true;
