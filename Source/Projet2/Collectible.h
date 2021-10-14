@@ -30,8 +30,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void Interact() override;
+	void Interact(ACharacter* owner) override;
 
-	virtual void Pickup();
+	virtual void Pickup(ACharacter* owner);
 	virtual void Drop();
 };

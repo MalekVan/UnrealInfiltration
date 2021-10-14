@@ -14,4 +14,5 @@ class PROJET2_API UBT_ChasePlayer_TestP : public UBTTaskNode
 {
 	GENERATED_BODY()
 	
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 };

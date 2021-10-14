@@ -13,6 +13,7 @@ AMyAIControllerTestP::AMyAIControllerTestP() //Constructeur
 {
 	BehaviorComp = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorComp"));
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
+
  
 	LocationToGoKey = "LocationToGo";
 	DetectPlayerKey = "DetectPlayer";
