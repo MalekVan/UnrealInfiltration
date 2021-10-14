@@ -45,6 +45,7 @@ void ACollectible::Pickup(ACharacter* owner)
 	{
 		bIsCarried = true;
 		SetActorEnableCollision(false);
+		StaticMesh->SetSimulatePhysics(false);
 
 		FName socket = TEXT("SocketNourriture");
 
@@ -65,4 +66,5 @@ void ACollectible::Drop()
 	SetActorRelativeLocation(FVector(0.0,40.0,0.0));
 	this->DetachFromActor(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
 	SetActorEnableCollision(true);
+	StaticMesh->SetSimulatePhysics(true);
 }

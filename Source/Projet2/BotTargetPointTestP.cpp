@@ -8,9 +8,11 @@
 
 ABotTargetPointTestP::ABotTargetPointTestP()
 {
-	//BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
-	//BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &ABotTargetPointTestP::OnBoxBeginOverlap);
-
+	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
+	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &ABotTargetPointTestP::OnBoxBeginOverlap);
+	BoxCollision->SetupAttachment(RootComponent);
+	BoxCollision->SetRelativeLocation(FVector(0.0,.0,.0));
+	
 	//Recuperer le component car probleme quand on essaye de la créer
 	TArray<UBoxComponent*> arraybox = TArray<UBoxComponent*>();
 	GetComponents<UBoxComponent>(arraybox);
