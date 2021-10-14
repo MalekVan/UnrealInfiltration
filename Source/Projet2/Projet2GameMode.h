@@ -20,21 +20,19 @@ public:
 	
 	class AGameHUD* GameHUD;
 
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="VariablesGame")
-	int NumberOfEnnemyMax ;
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="VariablesGame")
-	int NumberOfEnnemySpawn ;
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="VariablesGame")
-    int NumberOfFruitsSpawn ;
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="VariablesGame")
-	int NumberOfFruitsMax ;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="VariablesGame")
+	int NumberOfEnnemyMax = 2;
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="VariablesGame")
+	int NumberOfEnnemySpawn = 0;
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="VariablesGame")
+    int NumberOfFruitsSpawn = 0;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="VariablesGame")
+	int NumberOfFruitsMax = 5;
 
 	class ASpawnerOfIA* SpawnerIA;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "IAToSpawn")
 	TSubclassOf<AAICharacterTestP> IAClass;
-
-	
 	
 	void MakeCheckForSpawn();
 	void SpawnIA();

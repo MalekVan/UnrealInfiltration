@@ -19,12 +19,9 @@ class PROJET2_API ABotTargetPointTestP : public ATargetPoint
 	//BOX COLLISION NE MARCHE PAS EN JEU, POURQUOI ?????? NAPPARAIT MEME PAS DANS LA VUE EN JEU
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="Collider")
 	class UBoxComponent* BoxCollision;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Mesh")
-	class UStaticMeshComponent* SocleMesh;
 	
 	bool FruitOnThisTargetPoint = false;
 
 	UFUNCTION()
 	void OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	
 };

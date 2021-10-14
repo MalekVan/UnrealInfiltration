@@ -3,7 +3,6 @@
 #include "MyAIControllerTestP.h"
 #include "BotTargetPointTestP.h"
 #include "AICharacterTestP.h"
-#include "Projet2GameMode.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -42,62 +41,6 @@ void AMyAIControllerTestP::OnPossess(APawn* InPawn)
 
 		//Remplir le tableau avec tout les targets points dispos.
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABotTargetPointTestP::StaticClass(), BotTargetPoints);
-
-		AProjet2GameMode* Gamemode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
-		if(Gamemode->NumberOfFruitsSpawn < Gamemode->NumberOfFruitsMax)
-		{
-			AIChar->HaveFruit = true;
-			//faire spawn le fruit dans le socket correspondant.
-			AIChar->AttachAFruitToSocket(AIChar->CreateFruit());
-			if (BlackboardComp)
-			{
-				BlackboardComp->SetValueAsBool("FruitsToDropDown", true);
-				
-			}
-			ABotTargetPointTestP* TempEmptyPoint = GetRandomPointEmpty();
-			if (TempEmptyPoint)
-			{
-				ListOfDestinationPoints.Add(TempEmptyPoint);
-			}
-
-		}
-		else
-		{
-			AIChar->HaveFruit = false;
-			ListOfDestinationPoints.Add(GetRandomPoint());
-			ListOfDestinationPoints.Add(GetRandomPoint());
-			
-		}
 	}
-}
-
-ABotTargetPointTestP* AMyAIControllerTestP::GetRandomPointEmpty()
-{
-
-	TArray<ABotTargetPointTestP*> ListFreeTemp;
-	for (int i = 0; i < BotTargetPoints.Num(); i++)
-	{
-		ABotTargetPointTestP* tempPoint = Cast<ABotTargetPointTestP>(BotTargetPoints[i]);
-		if (!tempPoint->FruitOnThisTargetPoint)
-		{
-			ListFreeTemp.Add(tempPoint);
-		}
-	}
-	
-	int RandomIndex = FMath::RandRange(0, ListFreeTemp.Num()-1);
-	
-	if (ListFreeTemp.Num() <= 0 )
-	{
-		return nullptr;
-	}
-	
-	return ListFreeTemp[RandomIndex];
-	
-}
-
-ABotTargetPointTestP* AMyAIControllerTestP::GetRandomPoint()
-{
-	int RandomIndex = FMath::RandRange(0, BotTargetPoints.Num()-1);
-	return Cast<ABotTargetPointTestP>(BotTargetPoints[RandomIndex]);
 }
 

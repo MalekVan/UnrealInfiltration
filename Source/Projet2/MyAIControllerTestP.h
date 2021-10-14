@@ -28,19 +28,13 @@ class PROJET2_API AMyAIControllerTestP : public AAIController
  
 	/*All targets point availables in the level*/
 	TArray<AActor*> BotTargetPoints;
-
  
 	/*Posses is executed when the character we want to control is spawned.
 	Inside this function, we initialize the blackboard and start the behavior tree*/
 	virtual void OnPossess(APawn* Pawn) override;
-
-	virtual class ABotTargetPointTestP* GetRandomPointEmpty();
-	virtual ABotTargetPointTestP* GetRandomPoint();
-
+ 
 	public:
-	TArray< ABotTargetPointTestP*> ListOfDestinationPoints;
-
-
+ 
 	/*----------Constructor----------*/
 	AMyAIControllerTestP();
 	
