@@ -11,7 +11,7 @@
 
 AProjet2GameMode::AProjet2GameMode()
 {
-	NumberOfEnnemyMax = 2;
+	NumberOfEnnemyMax = 1;
 	NumberOfEnnemySpawn = 0;
 	NumberOfFruitsMax = 5;
 	NumberOfFruitsSpawn = 0;
