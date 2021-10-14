@@ -44,7 +44,7 @@ void ACollectible::Pickup()
 		SetActorEnableCollision(false);
 		TArray<USkeletalMeshComponent*> PlayerMeshComponents = TArray<USkeletalMeshComponent*>();
 		ACharacter* player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-
+		
 		FName socket = TEXT("SocketNourriture");
 
 		USkeletalMeshComponent* mesh = player->GetMesh();

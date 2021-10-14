@@ -11,6 +11,8 @@
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Collectible.h"
+#include "Projet2GameMode.h"
+#include "GameHUD.h"
 #include "Interactable.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -80,11 +82,6 @@ void AProjet2Character::SetupPlayerInputComponent(class UInputComponent* PlayerI
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AProjet2Character::OnResetVR);
-	
-	
-	//PERSONNAL INPUT
-	InputComponent->BindAction("TakeObject", IE_Released, this,   &AProjet2Character::TakeButtonReleased);
-    InputComponent->BindAction("TakeObject", IE_Pressed, this,   &AProjet2Character::TakeButtonPressed);
 
 	InputComponent->BindAction("Run", IE_Released, this,   &AProjet2Character::RunButtonReleased);
 	InputComponent->BindAction("Run", IE_Pressed, this,   &AProjet2Character::RunButtonPressed);
@@ -111,13 +108,7 @@ void AProjet2Character::BeginPlay() {
 	//ComponentSkeletalMesh = this->FindComponentByClass(new TSubclassOf<UActorComponent>::TClassType<USkeletalMeshComponent>);
 
 	//Obtenir une référence vers le skeletal mesh de Joris
-	TArray<USkeletalMeshComponent*> Components;
-	this->GetComponents<USkeletalMeshComponent>(Components);
-
-	if (Components.Num() > 0)
-	{
-		ComponentSkeletalMesh = Components[0];
-	}
+	ComponentSkeletalMesh = GetMesh();
 	
 	if (ComponentSkeletalMesh)
 	{
@@ -125,64 +116,31 @@ void AProjet2Character::BeginPlay() {
 		//Obtenir une référence vers l'anim instance de Joris
 		AnimInstanceOfSkeletalMesh = dynamic_cast<UAnimationClassForJoris*>((ComponentSkeletalMesh)? ComponentSkeletalMesh->GetAnimInstance() : nullptr);
 	}
-	else {UE_LOG(LogTemp, Warning, TEXT("ComponentSkeletalMesh is empty ! "));}
-
-	//Obtenir une référence vers le static mesh component du tonneau
-	TArray<UStaticMeshComponent*> SComponents;
-	this->GetComponents<UStaticMeshComponent>(SComponents);
-	
-	for (int i = 0; i < SComponents.Num(); i++)
+	else
 	{
-		
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Static mesh analyser : " + SComponents[i]->GetName()));
-		
-		
-		if (SComponents[i]->GetName() == "StaticMeshTonneau")
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("ComponentStaticMeshFound"));
-			ComponentStaticMeshTonneau = SComponents[i];
-			ComponentStaticMeshTonneau->SetHiddenInGame(true);
-		}
+		UE_LOG(LogTemp, Warning, TEXT("ComponentSkeletalMesh is empty ! "));
 	}
 
 	//Obtenir une référence vers le camera boom
-	TArray<USpringArmComponent*> CComponents;
-	this->GetComponents<USpringArmComponent>(CComponents);
-
-	if (CComponents.Num() > 0)
-	{
-		ComponentCameraBoom = CComponents[0];
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Component SpringArm Found"));
+	ComponentCameraBoom = FindComponentByClass<USpringArmComponent>();
+	if(ComponentCameraBoom)
+	{		
+		//Setup la valeur du camera arm
+		FuturValueOfZoom = ComponentCameraBoom->TargetArmLength;
 	}
-
-	//Setup la valeur du camera arm
-	FuturValueOfZoom = ComponentCameraBoom->TargetArmLength;
-}
-
- 
-void AProjet2Character::TakeButtonReleased()
-{
 	
+	GameMode = Cast<AProjet2GameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+	GameMode->GameHUD = Cast<AGameHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
 }
 
-void AProjet2Character::TakeButtonPressed()
+void AProjet2Character::UpdateMovementState()
 {
-	isCarry = !isCarry;
-	AnimInstanceOfSkeletalMesh->IsCarry = isCarry;
-
 	if (isCarry)
 	{
-		//Afficher le tonneau
-		ComponentStaticMeshTonneau->SetHiddenInGame(false);
 		if (GetCharacterMovement()->Velocity.Size() > 300)
 		{
 			GetCharacterMovement()->MaxWalkSpeed = 300;
 		}
-	}
-	else
-	{
-		//Cacher le tonneau
-		ComponentStaticMeshTonneau->SetHiddenInGame(true);
 	}
 }
 
@@ -286,9 +244,10 @@ void AProjet2Character::MoveRight(float Value)
 }
 
 void AProjet2Character::Interact()
-{
+{	
 	if(!isCarry)
 	{
+		isCarry = true;
 		// Detection de tous les AInteractable autour du joueur
 		TArray<AActor*> OverlappingActors = TArray<AActor*>();
 		GetOverlappingActors(OverlappingActors, AInteractable::StaticClass());
@@ -328,8 +287,10 @@ void AProjet2Character::Interact()
 				}				
 				InteractableActor->Interact();
 			}
+		} else
+		{			
+			isCarry = false;
 		}
-		isCarry = true;
 		AnimInstanceOfSkeletalMesh->IsCarry = isCarry;
 	} else
 	{
@@ -337,7 +298,9 @@ void AProjet2Character::Interact()
 		HoldedCollectible = nullptr;
 		isCarry = false;
 		AnimInstanceOfSkeletalMesh->IsCarry = isCarry;
-	}	
+	}
+	UpdateMovementState();
+	GameMode->AddScore(1);
 }
 
 float AProjet2Character::GetDistanceBetweenVectors(FVector From, FVector To)

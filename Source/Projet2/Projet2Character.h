@@ -39,9 +39,6 @@ public:
 	UAnimationClassForJoris * AnimInstanceOfSkeletalMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	UStaticMeshComponent* ComponentStaticMeshTonneau;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USpringArmComponent* ComponentCameraBoom;
 
 protected:
@@ -52,8 +49,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	//Controller
-	void TakeButtonReleased();
-	void TakeButtonPressed();
+	void UpdateMovementState();
 
 	void RunButtonReleased();
 	void RunButtonPressed();
@@ -112,6 +108,8 @@ protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	// End of APawn interface
+
+	class AProjet2GameMode* GameMode;
 
 public:
 	/** Returns CameraBoom subobject **/
