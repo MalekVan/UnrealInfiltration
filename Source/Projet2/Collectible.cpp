@@ -40,9 +40,10 @@ void ACollectible::Interact(ACharacter* owner)
 
 void ACollectible::Pickup(ACharacter* owner)
 {	
-	UE_LOG(LogClass, Log, TEXT("Pickup %s"), *GetName());
+	UE_LOG(LogTemp, Warning, TEXT("PICKUP"));
 	if(!bIsCarried)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("PICKUP START"));
 		bIsCarried = true;
 		SetActorEnableCollision(false);
 		StaticMesh->SetSimulatePhysics(false);
@@ -61,10 +62,11 @@ void ACollectible::Pickup(ACharacter* owner)
 
 void ACollectible::Drop()
 {
-	bIsCarried = false;
 	UE_LOG(LogClass, Log, TEXT("Drop %s"), *GetName());
 	SetActorRelativeLocation(FVector(0.0,40.0,0.0));
 	this->DetachFromActor(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
 	SetActorEnableCollision(true);
-	StaticMesh->SetSimulatePhysics(true);
+	StaticMesh->SetSimulatePhysics(false);
+	bIsCarried = false;
+
 }
