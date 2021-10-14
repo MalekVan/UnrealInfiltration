@@ -21,7 +21,10 @@ void ACollectible::BeginPlay()
 	
 	TArray<UStaticMeshComponent*> StaticComps = TArray<UStaticMeshComponent*>();
 	GetComponents<UStaticMeshComponent>(StaticComps);
-	StaticMesh = *StaticComps.GetData();
+	if (StaticComps.Num() > 0)
+	{
+		StaticMesh = StaticComps[0];
+	}
 }
 
 // Called every frame
@@ -30,24 +33,22 @@ void ACollectible::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void ACollectible::Interact()
+void ACollectible::Interact(ACharacter* owner)
 {
-	Pickup();
+	Pickup(owner);
 }
 
-void ACollectible::Pickup()
+void ACollectible::Pickup(ACharacter* owner)
 {	
 	UE_LOG(LogClass, Log, TEXT("Pickup %s"), *GetName());
 	if(!bIsCarried)
 	{
 		bIsCarried = true;
 		SetActorEnableCollision(false);
-		TArray<USkeletalMeshComponent*> PlayerMeshComponents = TArray<USkeletalMeshComponent*>();
-		ACharacter* player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-		
+
 		FName socket = TEXT("SocketNourriture");
 
-		USkeletalMeshComponent* mesh = player->GetMesh();
+		USkeletalMeshComponent* mesh = owner->GetMesh();
 
 		const USkeletalMeshSocket* socketInstance = mesh->GetSocketByName(socket);
 		FAttachmentTransformRules rules = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true);

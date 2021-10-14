@@ -1,4 +1,3 @@
-
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AICharacterTestP.h"
@@ -56,7 +55,6 @@ void AAICharacterTestP::OnPerceptionUpdatedDelegate(AActor* Actor, FAIStimulus S
 void AAICharacterTestP::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
 }
 
 // Called to bind functionality to input
