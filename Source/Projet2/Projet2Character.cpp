@@ -108,6 +108,7 @@ void AProjet2Character::OnResetVR()
 void AProjet2Character::BeginPlay() {
 	Super::BeginPlay();
 
+	
 	//ComponentSkeletalMesh = this->FindComponentByClass(new TSubclassOf<UActorComponent>::TClassType<USkeletalMeshComponent>);
 
 	//Obtenir une référence vers le skeletal mesh de Joris
