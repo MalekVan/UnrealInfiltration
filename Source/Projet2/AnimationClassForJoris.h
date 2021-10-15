@@ -24,5 +24,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InfosOwner")
 	bool IsCarry;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InfosOwner")
+	bool IsSitting;
+
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 };

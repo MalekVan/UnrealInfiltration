@@ -179,7 +179,7 @@ void AProjet2Character::ZoomOut()
 void AProjet2Character::Tick(float deltaTime)
 {
 	Super::Tick(deltaTime);
-
+	
 	if (ComponentCameraBoom->TargetArmLength != FuturValueOfZoom)
 	{
 		if (FuturValueOfZoom > ComponentCameraBoom->TargetArmLength)
@@ -193,6 +193,7 @@ void AProjet2Character::Tick(float deltaTime)
 			if (FuturValueOfZoom >ComponentCameraBoom->TargetArmLength){FuturValueOfZoom = ComponentCameraBoom->TargetArmLength;}
 		}
 	}
+	
 }
 
 void AProjet2Character::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
@@ -247,25 +248,26 @@ void AProjet2Character::MoveRight(float Value)
 }
 
 void AProjet2Character::Interact()
-{	
+{
+	UE_LOG(LogTemp, Warning, TEXT("Interact %s"), isCarry ? TEXT("True") : TEXT("False"));
 	if(!isCarry)
 	{
-		isCarry = true;
 		// Detection de tous les AInteractable autour du joueur
 		TArray<AActor*> OverlappingActors = TArray<AActor*>();
 		GetOverlappingActors(OverlappingActors, AInteractable::StaticClass());
 	
 		if(OverlappingActors.Num() == 1) // S'il n'y en a qu'un, on interagit avec
 		{
-			UE_LOG(LogClass, Log, TEXT("Interact1"));
+			UE_LOG(LogTemp, Warning, TEXT("Interact1"));
 			AActor* OverlappedActor = *OverlappingActors.GetData();
 			if(AInteractable* InteractableActor = Cast<AInteractable>(OverlappedActor))
 			{
-				UE_LOG(LogClass, Log, TEXT("Interact2"));
+				UE_LOG(LogTemp, Warning, TEXT("Interact2"));
 				if(OverlappedActor->IsA(ACollectible::StaticClass()))
 				{
-					UE_LOG(LogClass, Log, TEXT("Interact3"));
+					UE_LOG(LogTemp, Warning, TEXT("Interact3"));
 					HoldedCollectible = Cast<ACollectible>(OverlappedActor);
+					isCarry = true;
 				}
 				InteractableActor->Interact(this);
 			}
@@ -287,12 +289,13 @@ void AProjet2Character::Interact()
 				if(ClosestActor->IsA(ACollectible::StaticClass()))
 				{
 					HoldedCollectible = Cast<ACollectible>(ClosestActor);
+					isCarry = true;
 				}				
 				InteractableActor->Interact(this);
 			}
 		} else
-		{			
-			isCarry = false;
+		{
+			UE_LOG(LogTemp, Warning, TEXT("No overlapping actors"));
 		}
 		AnimInstanceOfSkeletalMesh->IsCarry = isCarry;
 	} else

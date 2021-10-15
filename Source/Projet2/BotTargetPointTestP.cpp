@@ -14,6 +14,7 @@ ABotTargetPointTestP::ABotTargetPointTestP()
 	BoxCollision->SetRelativeLocation(FVector(0.0,.0,.0));
 
 	//ETIENNE
-	//SocleMesh  = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SocleMesh"));
-	//SocleMesh->SetupAttachment(RootComponent);
+	SocleMesh  = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SocleMesh"));
+	SocleMesh->SetupAttachment(RootComponent);	
+	SocleMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);	
 }

@@ -24,6 +24,8 @@ class AProjet2Character : public ACharacter
 public:
 	AProjet2Character();
 	
+	static float GetDistanceBetweenVectors(FVector From, FVector To);
+	
 	//class UAIPerceptionStimuliSourceComponent* StimuliSourceComp;
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
@@ -103,8 +105,6 @@ protected:
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 	
 	void Interact();
-
-	static float GetDistanceBetweenVectors(FVector From, FVector To);
 
 protected:
 	// APawn interface
