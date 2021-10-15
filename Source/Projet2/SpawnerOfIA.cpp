@@ -28,18 +28,7 @@ void ASpawnerOfIA::BeginPlay()
 
 void ASpawnerOfIA::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	AAICharacterTestP* charaIA = Cast<AAICharacterTestP>(OtherActor);
-	if (charaIA != nullptr)
-	{
-		if (charaIA->GoBackToZone == true)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("GO BACK TO ZONE"));
-			charaIA->Destroy();
-			AProjet2GameMode* Gamemode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
-			Gamemode->NumberOfEnnemySpawn--;
-			Gamemode->MakeCheckForSpawn();
-		}
-	}
+
 }
 
 // Called every frame

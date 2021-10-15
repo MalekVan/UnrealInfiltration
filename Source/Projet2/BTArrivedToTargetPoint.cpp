@@ -3,14 +3,27 @@
 
 #include "BTArrivedToTargetPoint.h"
 #include "MyAIControllerTestP.h"
+#include "AICharacterTestP.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 EBTNodeResult::Type UBTArrivedToTargetPoint::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	AMyAIControllerTestP* AICon = Cast<AMyAIControllerTestP>(OwnerComp.GetAIOwner());
+	AAICharacterTestP* IAchara = Cast<AAICharacterTestP>(AICon->GetCharacter());
+
+	UE_LOG(LogTemp, Warning, TEXT("OUAIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"));
 
 	if (AICon && AICon->ListOfDestinationPoints.Num() > 0)
 	{
 		AICon->ListOfDestinationPoints.RemoveAt(0);
+
+		if (AICon->ListOfDestinationPoints.Num() <= 0) //J'ai atteint la destination finale de mon tableau de destination.
+		{
+			//Si j'atteint ma destination et que je devais poser un fruit, alors je n'ai plus besoin d'en poser.
+			AICon->GetBlackboardComp()->SetValueAsBool("FruitsToDropDown", false);
+			AICon->GetBlackboardComp()->SetValueAsBool("GoBackToBase", true);
+		}
+		
 		return EBTNodeResult::Succeeded;
 	}
 

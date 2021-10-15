@@ -50,6 +50,7 @@ public:
 	class ACollectible* Fruit;
 
 	bool IsDetecting;
-	bool HaveFruit;
+	bool HaveFruitInHand;
+	bool FruitToDropDown;
 	bool GoBackToZone;
 };

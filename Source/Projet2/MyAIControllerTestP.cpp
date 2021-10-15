@@ -18,13 +18,15 @@ AMyAIControllerTestP::AMyAIControllerTestP() //Constructeur
  
 	LocationToGoKey = "LocationToGo";
 	DetectPlayerKey = "DetectPlayer";
-
+	
 	ListOfDestinationPoints = TArray<ABotTargetPointTestP*>();
 }
 
 
 void AMyAIControllerTestP::OnPossess(APawn* InPawn)
 {
+	SetGenericTeamId(0); // pour differencier IA et joris
+	
 	Super::OnPossess(InPawn);
  
 	//Get the possessed Character and check if it's my own AI Character
@@ -48,13 +50,14 @@ void AMyAIControllerTestP::OnPossess(APawn* InPawn)
 		AProjet2GameMode* Gamemode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
 		if(Gamemode->NumberOfFruitsSpawn < Gamemode->NumberOfFruitsMax)
 		{
-			AIChar->HaveFruit = true;
+			AIChar->HaveFruitInHand = true;
 			//faire spawn le fruit dans le socket correspondant.
 			AIChar->AttachAFruitToSocket(AIChar->CreateFruit());
 			if (BlackboardComp)
 			{
 				BlackboardComp->SetValueAsBool("FruitsToDropDown", true);
-				
+				BlackboardComp->SetValueAsBool("HaveFruitInHands", true);
+				BlackboardComp->SetValueAsObject("FruitPosition", AIChar->Fruit);
 			}
 			ABotTargetPointTestP* TempEmptyPoint = GetRandomPointEmpty();
 			if (TempEmptyPoint)
@@ -65,7 +68,7 @@ void AMyAIControllerTestP::OnPossess(APawn* InPawn)
 		}
 		else
 		{
-			AIChar->HaveFruit = false;
+			AIChar->HaveFruitInHand = false;
 			ListOfDestinationPoints.Add(GetRandomPoint());
 			ListOfDestinationPoints.Add(GetRandomPoint());
 			
