@@ -1,8 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AICharacterTestP.h"
+
+#include "AnimClassForIA.h"
 #include "Projet2GameMode.h"
 #include "Collectible.h"
+#include "AnimClassForIA.h"
 #include "Projet2Character.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "MyAIControllerTestP.h"
@@ -59,6 +62,8 @@ void AAICharacterTestP::AttachAFruitToSocket(ACollectible* collectible)
 {
 	collectible->Pickup(this);
 	Fruit = collectible;
+	UAnimClassForIA* animclass = Cast<UAnimClassForIA>(GetMesh()->GetAnimInstance());
+	animclass->IsCarry = true;
 }
 
 ACollectible* AAICharacterTestP::CreateFruit()
@@ -77,6 +82,8 @@ void AAICharacterTestP::PutDownAFruit()
 	if (Fruit)
 	{
 		Fruit->Drop();
+		UAnimClassForIA* animclass = Cast<UAnimClassForIA>(GetMesh()->GetAnimInstance());
+		animclass->IsCarry = false;
 		GoBackToZone = true;
 	}
 }

@@ -6,11 +6,14 @@
 #include "AICharacterTestP.h"
 #include "BotTargetPointTestP.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "AnimClassForIA.h"
 
 EBTNodeResult::Type UBTDropFruit::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	AMyAIControllerTestP* AICon = Cast<AMyAIControllerTestP>(OwnerComp.GetAIOwner());
 	AAICharacterTestP* IAchara = Cast<AAICharacterTestP>(AICon->GetCharacter());
+	UAnimClassForIA* animClass = Cast<UAnimClassForIA>(IAchara->GetMesh()->GetAnimInstance());
+	
 	if (AICon && IAchara && AICon->GetBlackboardComp()->GetValueAsBool("HaveFruitInHands"))
 	{
 		if (IAchara->HaveFruitInHand)
@@ -26,6 +29,8 @@ EBTNodeResult::Type UBTDropFruit::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 				fruit->StaticMesh->SetupAttachment(tempPoint->GetRootComponent());
 				fruit->StaticMesh->SetSimulatePhysics(false);
 				tempPoint->FruitOnThisTargetPoint=true;
+
+				//animClass->IsCarry = false;
 
 				//Le joueur perd le fruit de ses mains
 				IAchara->HaveFruitInHand = false;

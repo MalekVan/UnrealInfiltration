@@ -63,6 +63,7 @@ void AMyAIControllerTestP::OnPossess(APawn* InPawn)
 			if (TempEmptyPoint)
 			{
 				ListOfDestinationPoints.Add(TempEmptyPoint);
+				TempEmptyPoint->FruitOnThisTargetPoint =true;
 			}
 
 		}
