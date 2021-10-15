@@ -12,10 +12,10 @@
 
 AMyAIControllerTestP::AMyAIControllerTestP() //Constructeur
 {
+	//Deja un blackboard + un behaviour tree dans AAIController donc pas besoin de recreer ? 
 	BehaviorComp = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorComp"));
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
-
- 
+	
 	LocationToGoKey = "LocationToGo";
 	DetectPlayerKey = "DetectPlayer";
 	
