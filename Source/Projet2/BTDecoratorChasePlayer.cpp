@@ -8,7 +8,7 @@
 bool UBTDecoratorChasePlayer::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
 {
 	AMyAIControllerTestP* controller = Cast<AMyAIControllerTestP>(OwnerComp.GetOwner());
-	if (playerNextToMe)
+	if (bPlayerNextToMe)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("DECORATOR CHASE PLAYER ACTIVE"));
 	}
@@ -17,5 +17,5 @@ bool UBTDecoratorChasePlayer::CalculateRawConditionValue(UBehaviorTreeComponent&
 		UE_LOG(LogTemp, Warning, TEXT("DECORATOR CHASE PLAYER NOT ACTIVE"));
 	}
 	
-	return controller->GetBlackboardComponent()->GetValueAsBool("DetectPlayer") == playerNextToMe;
+	return controller->GetBlackboardComponent()->GetValueAsBool("DetectPlayer") == bPlayerNextToMe;
 }

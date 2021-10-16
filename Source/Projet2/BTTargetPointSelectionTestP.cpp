@@ -28,7 +28,7 @@ EBTNodeResult::Type UBTTargetPointSelectionTestP::ExecuteTask(UBehaviorTreeCompo
 		else
 		{
 			BlackboardComp->SetValueAsBool("GoBackToBase", true);
-			Cast<AAICharacterTestP>(AICon->GetCharacter())->GoBackToZone = true;
+			Cast<AAICharacterTestP>(AICon->GetCharacter())->bGoBackToZone = true;
 			return EBTNodeResult::Failed;
 
 		}

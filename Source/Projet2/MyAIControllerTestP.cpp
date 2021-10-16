@@ -50,7 +50,7 @@ void AMyAIControllerTestP::OnPossess(APawn* InPawn)
 		AProjet2GameMode* Gamemode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
 		if(Gamemode->NumberOfFruitsSpawn < Gamemode->NumberOfFruitsMax)
 		{
-			AIChar->HaveFruitInHand = true;
+			AIChar->bHaveFruitInHand = true;
 			//faire spawn le fruit dans le socket correspondant.
 			AIChar->AttachAFruitToSocket(AIChar->CreateFruit());
 			if (BlackboardComp)
@@ -63,13 +63,13 @@ void AMyAIControllerTestP::OnPossess(APawn* InPawn)
 			if (TempEmptyPoint)
 			{
 				ListOfDestinationPoints.Add(TempEmptyPoint);
-				TempEmptyPoint->FruitOnThisTargetPoint =true;
+				TempEmptyPoint->bFruitOnThisTargetPoint =true;
 			}
 
 		}
 		else
 		{
-			AIChar->HaveFruitInHand = false;
+			AIChar->bHaveFruitInHand = false;
 			ListOfDestinationPoints.Add(GetRandomPoint());
 			ListOfDestinationPoints.Add(GetRandomPoint());
 			
@@ -84,7 +84,7 @@ ABotTargetPointTestP* AMyAIControllerTestP::GetRandomPointEmpty()
 	for (int i = 0; i < BotTargetPoints.Num(); i++)
 	{
 		ABotTargetPointTestP* tempPoint = Cast<ABotTargetPointTestP>(BotTargetPoints[i]);
-		if (!tempPoint->FruitOnThisTargetPoint)
+		if (!tempPoint->bFruitOnThisTargetPoint)
 		{
 			ListFreeTemp.Add(tempPoint);
 		}

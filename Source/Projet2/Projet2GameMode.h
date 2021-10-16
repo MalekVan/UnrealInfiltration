@@ -14,9 +14,14 @@ class AProjet2GameMode : public AGameMode
 
 public:
 	AProjet2GameMode();
-	
+
+	void AddEnemy(AAICharacterTestP* Enemy);
+	void RemoveEnemy(AAICharacterTestP* Enemy);
+
 	void AddScore(int value);
-	bool CheckForVictory();
+	void CheckForVictory();
+	void Victory();
+	void Defeat();
 	
 	class AGameHUD* GameHUD;
 
@@ -42,4 +47,6 @@ public:
 protected:
 	int CurrentScore = 0;
 	int MaxScore = 5;
+
+	TArray<AAICharacterTestP*> AliveEnemies;
 };

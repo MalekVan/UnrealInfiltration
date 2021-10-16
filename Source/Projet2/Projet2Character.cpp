@@ -139,7 +139,7 @@ void AProjet2Character::BeginPlay() {
 
 void AProjet2Character::UpdateMovementState()
 {
-	if (isCarry)
+	if (bIsCarry)
 	{
 		if (GetCharacterMovement()->Velocity.Size() > 300)
 		{
@@ -155,7 +155,7 @@ void AProjet2Character::RunButtonReleased()
 
 void AProjet2Character::RunButtonPressed()
 {
-	if (!isCarry) // Si le joueur porte quelque chose il ne peut pas se mettre a courir. 
+	if (!bIsCarry) // Si le joueur porte quelque chose il ne peut pas se mettre a courir. 
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 600;
 	}
@@ -250,8 +250,8 @@ void AProjet2Character::MoveRight(float Value)
 
 void AProjet2Character::Interact()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Interact %s"), isCarry ? TEXT("True") : TEXT("False"));
-	if(!isCarry)
+	UE_LOG(LogTemp, Warning, TEXT("Interact %s"), bIsCarry ? TEXT("True") : TEXT("False"));
+	if(!bIsCarry)
 	{
 		// Detection de tous les AInteractable autour du joueur
 		TArray<AActor*> OverlappingActors = TArray<AActor*>();
@@ -268,7 +268,7 @@ void AProjet2Character::Interact()
 				{
 					UE_LOG(LogTemp, Warning, TEXT("Interact3"));
 					HoldedCollectible = Cast<ACollectible>(OverlappedActor);
-					isCarry = true;
+					bIsCarry = true;
 				}
 				InteractableActor->Interact(this);
 			}
@@ -290,7 +290,7 @@ void AProjet2Character::Interact()
 				if(ClosestActor->IsA(ACollectible::StaticClass()))
 				{
 					HoldedCollectible = Cast<ACollectible>(ClosestActor);
-					isCarry = true;
+					bIsCarry = true;
 				}				
 				InteractableActor->Interact(this);
 			}
@@ -298,13 +298,13 @@ void AProjet2Character::Interact()
 		{
 			UE_LOG(LogTemp, Warning, TEXT("No overlapping actors"));
 		}
-		AnimInstanceOfSkeletalMesh->IsCarry = isCarry;
+		AnimInstanceOfSkeletalMesh->IsCarry = bIsCarry;
 	} else
 	{
 		HoldedCollectible->Drop();
 		HoldedCollectible = nullptr;
-		isCarry = false;
-		AnimInstanceOfSkeletalMesh->IsCarry = isCarry;
+		bIsCarry = false;
+		AnimInstanceOfSkeletalMesh->IsCarry = bIsCarry;
 	}
 	UpdateMovementState();
 	GameMode->AddScore(1);

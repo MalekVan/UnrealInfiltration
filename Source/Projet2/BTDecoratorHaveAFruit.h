@@ -15,7 +15,7 @@ class PROJET2_API UBTDecoratorHaveAFruit : public UBTDecorator
 	GENERATED_BODY()
 	public :
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool HaveAFruit;
+	bool bHaveAFruit;
 
 	virtual bool CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const override;
 };

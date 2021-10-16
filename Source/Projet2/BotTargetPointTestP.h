@@ -22,5 +22,5 @@ class PROJET2_API ABotTargetPointTestP : public ATargetPoint
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Mesh")
 	class UStaticMeshComponent* SocleMesh;
 	
-	bool FruitOnThisTargetPoint = false;
+	bool bFruitOnThisTargetPoint = false;
 };

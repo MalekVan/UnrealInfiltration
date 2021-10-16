@@ -62,7 +62,7 @@ protected:
 	void ZoomOut();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	bool isCarry;
+	bool bIsCarry;
 
 	ACollectible* HoldedCollectible = nullptr;
 

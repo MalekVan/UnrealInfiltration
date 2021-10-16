@@ -15,11 +15,12 @@ EBTNodeResult::Type UBTDestroyIA::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	if (IAchara != nullptr)
 	{
 		if (AICon->GetBlackboardComp()->GetValueAsBool("GoBackToBase") == true)
-		{
+		{			
+			AProjet2GameMode* GameMode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
+			GameMode->RemoveEnemy(IAchara);
 			IAchara->Destroy();
-			AProjet2GameMode* Gamemode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
-			Gamemode->NumberOfEnnemySpawn--;
-			Gamemode->MakeCheckForSpawn();
+			GameMode->NumberOfEnnemySpawn--;
+			GameMode->MakeCheckForSpawn();
 		}
 		return EBTNodeResult::Succeeded;
 	}

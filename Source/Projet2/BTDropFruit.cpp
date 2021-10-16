@@ -16,7 +16,7 @@ EBTNodeResult::Type UBTDropFruit::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	
 	if (AICon && IAchara && AICon->GetBlackboardComp()->GetValueAsBool("HaveFruitInHands"))
 	{
-		if (IAchara->HaveFruitInHand)
+		if (IAchara->bHaveFruitInHand)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("OVERLAP IA"));
 
@@ -28,12 +28,12 @@ EBTNodeResult::Type UBTDropFruit::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 				IAchara->PutDownAFruit();
 				fruit->StaticMesh->SetupAttachment(tempPoint->GetRootComponent());
 				fruit->StaticMesh->SetSimulatePhysics(false);
-				tempPoint->FruitOnThisTargetPoint=true;
+				tempPoint->bFruitOnThisTargetPoint=true;
 
 				//animClass->IsCarry = false;
 
 				//Le joueur perd le fruit de ses mains
-				IAchara->HaveFruitInHand = false;
+				IAchara->bHaveFruitInHand = false;
 				AICon->GetBlackboardComp()->SetValueAsBool("HaveFruitInHands", false);
 			}
 		}

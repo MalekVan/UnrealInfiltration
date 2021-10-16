@@ -16,6 +16,6 @@ void UAnimClassForIA::NativeUpdateAnimation(float DeltaSeconds)
 
 	if (OwningActor != nullptr)
 	{
-		Speed = OwningActor->GetVelocity().Size();
+		bSpeed = OwningActor->GetVelocity().Size();
 	}
 }

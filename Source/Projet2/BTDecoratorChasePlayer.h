@@ -16,7 +16,7 @@ class PROJET2_API UBTDecoratorChasePlayer : public UBTDecorator
 	
 public :
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool playerNextToMe;
+	bool bPlayerNextToMe;
 
 	virtual bool CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const override;
 };

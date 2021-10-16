@@ -7,5 +7,5 @@
 
 bool UBTDecoratorHaveAFruit::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
 {
-	return OwnerComp.GetBlackboardComponent()->GetValueAsBool("HaveFruitInHands") == HaveAFruit;
+	return OwnerComp.GetBlackboardComponent()->GetValueAsBool("HaveFruitInHands") == bHaveAFruit;
 }

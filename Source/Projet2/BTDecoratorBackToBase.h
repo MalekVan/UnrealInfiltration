@@ -15,7 +15,7 @@ class PROJET2_API UBTDecoratorBackToBase : public UBTDecorator
 	GENERATED_BODY()
 public :
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool GoBackToBase;
+	bool bGoBackToBase;
 
 	virtual bool CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const override;
 };

@@ -28,7 +28,9 @@ protected:
 	UFUNCTION()
 	void OnPerceptionUpdatedDelegate(AActor* Actor, FAIStimulus Stimulus);
 
-	
+	UFUNCTION()
+	void OnStaticMeshBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -49,8 +51,8 @@ public:
 	
 	class ACollectible* Fruit;
 
-	bool IsDetecting;
-	bool HaveFruitInHand;
-	bool FruitToDropDown;
-	bool GoBackToZone;
+	bool bIsDetecting;
+	bool bHaveFruitInHand;
+	bool bFruitToDropDown;
+	bool bGoBackToZone;
 };

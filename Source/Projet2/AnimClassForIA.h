@@ -20,13 +20,19 @@ class PROJET2_API UAnimClassForIA : public UAnimInstance
 	UAnimClassForIA();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InfosOwner")
-	float Speed;
+	float bSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InfosOwner")
-	bool IsCarry;
+	bool bIsCarry;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InfosOwner")
-	bool IsSitting;
+	bool bIsSitting;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InfosOwner")
+	bool bWon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InfosOwner")
+	bool bLost;
 
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 };

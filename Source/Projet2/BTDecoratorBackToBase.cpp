@@ -7,5 +7,5 @@
 
 bool UBTDecoratorBackToBase::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
 {
-	return OwnerComp.GetBlackboardComponent()->GetValueAsBool("GoBackToBase") == GoBackToBase;
+	return OwnerComp.GetBlackboardComponent()->GetValueAsBool("GoBackToBase") == bGoBackToBase;
 }

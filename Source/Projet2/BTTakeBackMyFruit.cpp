@@ -17,7 +17,7 @@ EBTNodeResult::Type UBTTakeBackMyFruit::ExecuteTask(UBehaviorTreeComponent& Owne
 		//Passer HaveFruitInHand a true
 		
 		IAchara->AttachAFruitToSocket(IAchara->Fruit);
-		IAchara->HaveFruitInHand = true;
+		IAchara->bHaveFruitInHand = true;
 		AICon->GetBlackboardComp()->SetValueAsBool("HaveFruitInHands", true);
 		return EBTNodeResult::Succeeded;
 	}
