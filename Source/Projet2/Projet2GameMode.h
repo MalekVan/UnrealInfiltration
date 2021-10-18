@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "AICharacterTestP.h"
-#include "BotTargetPointTestP.h"
 #include "GameFramework/GameMode.h"
 #include "Projet2GameMode.generated.h"
 
@@ -44,6 +43,8 @@ public:
 	TSubclassOf<AAICharacterTestP> IAClass;
 
 	TArray<ABotTargetPointTestP*> TargetPoints;
+	
+	FTimerHandle timerhandle;
 	
 	void MakeCheckForSpawn();
 	void SpawnIA();
