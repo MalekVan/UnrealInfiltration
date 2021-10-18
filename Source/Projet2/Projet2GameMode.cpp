@@ -26,6 +26,7 @@ AProjet2GameMode::AProjet2GameMode()
 	}
 
 	AliveEnemies = TArray<AAICharacterTestP*>();
+	TargetPoints = TArray<ABotTargetPointTestP*>();
 }
 
 void AProjet2GameMode::AddScore(int Value)
@@ -121,4 +122,17 @@ void AProjet2GameMode::AddEnemy(AAICharacterTestP* Enemy)
 void AProjet2GameMode::RemoveEnemy(AAICharacterTestP* Enemy)
 {
 	AliveEnemies.Remove(Enemy);
+}
+
+void AProjet2GameMode::AddTargetPoint(ABotTargetPointTestP* TargetPoint)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Add TP"));
+	TargetPoints.Add(TargetPoint);
+
+	if(TargetPoints.Num() == 9)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("TP PLUS 10"));
+		int RandomInt = FMath::RandRange(0, TargetPoints.Num()-1);
+		TargetPoints[RandomInt]->SpawnFruitOnPoint();
+	}
 }

@@ -17,8 +17,6 @@ ASpawnerOfIA::ASpawnerOfIA()
 void ASpawnerOfIA::BeginPlay()
 {
 	Super::BeginPlay();
-
-	int i = FMath::RandRange(0, TargetPoints.Num()-1);
 	
 	AProjet2GameMode* Gamemode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
 	Gamemode->SpawnerIA = this;

@@ -36,12 +36,18 @@ public:
 	int NumberOfFruitsMax ;
 
 	class ASpawnerOfIA* SpawnerIA;
-
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "CollectibleToSpawn")
+	TSubclassOf<ACollectible> CollectibleClass;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "IAToSpawn")
 	TSubclassOf<AAICharacterTestP> IAClass;
+
+	TArray<ABotTargetPointTestP*> TargetPoints;
 	
 	void MakeCheckForSpawn();
 	void SpawnIA();
+	void AddTargetPoint(ABotTargetPointTestP* TargetPoint);
 
 protected:
 	int CurrentScore = 0;
