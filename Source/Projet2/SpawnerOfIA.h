@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "SpawnerOfIA.generated.h"
-
+class ABotTargetPointTestP;
 UCLASS()
 class PROJET2_API ASpawnerOfIA : public AActor
 {
@@ -27,6 +27,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere, category = "Spawners")
+	TArray<TSubclassOf<ABotTargetPointTestP>> TargetPoints;
 };
 
 

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AICharacterTestP.h"
+#include "BotTargetPointTestP.h"
 #include "GameFramework/GameMode.h"
 #include "Projet2GameMode.generated.h"
 
@@ -38,7 +39,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "IAToSpawn")
 	TSubclassOf<AAICharacterTestP> IAClass;
-	
 	
 	void MakeCheckForSpawn();
 	void SpawnIA();

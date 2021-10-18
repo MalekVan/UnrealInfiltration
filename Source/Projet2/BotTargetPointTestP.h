@@ -16,6 +16,8 @@ class PROJET2_API ABotTargetPointTestP : public ATargetPoint
 	public : 
 	ABotTargetPointTestP();
 
+	void SpawnFruitOnPoint();
+
 	//BOX COLLISION NE MARCHE PAS EN JEU, POURQUOI ?????? NAPPARAIT MEME PAS DANS LA VUE EN JEU
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="Collider")
 	class UBoxComponent* BoxCollision;

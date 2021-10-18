@@ -46,6 +46,7 @@ void AProjet2GameMode::CheckForVictory()
 void AProjet2GameMode::Victory()
 {
 	Cast<AProjet2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->AnimInstanceOfSkeletalMesh->bWon = true;
+	Cast<AProjet2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->bCanMove = false;
 
 	TArray<AActor*> AllEnemies;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAICharacterTestP::StaticClass(), AllEnemies);
@@ -54,7 +55,11 @@ void AProjet2GameMode::Victory()
 	for (AActor* Enemy : AllEnemies)
 	{
 		if(AAICharacterTestP* IAEnemy = Cast<AAICharacterTestP>(Enemy))
+		{
 			Cast<UAnimClassForIA>(IAEnemy->GetMesh()->GetAnimInstance())->bLost = true;
+			IAEnemy->GetCharacterMovement()->MaxWalkSpeed = 0.0;;
+			IAEnemy->GetCharacterMovement()->Velocity = FVector(0.0,0.0,0.0);
+		}
 	}
 
 	GameHUD->DisplayVictoryMessage();
@@ -63,7 +68,8 @@ void AProjet2GameMode::Victory()
 void AProjet2GameMode::Defeat()
 {
 	Cast<AProjet2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->AnimInstanceOfSkeletalMesh->bLost = true;
-
+	Cast<AProjet2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->bCanMove = false;
+	
 	TArray<AActor*> AllEnemies;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAICharacterTestP::StaticClass(), AllEnemies);
 	//TActorIterator<AAICharacterTestP> ActorItr = TActorIterator<AAICharacterTestP>(GetWorld());
@@ -71,7 +77,11 @@ void AProjet2GameMode::Defeat()
 	for (AActor* Enemy : AllEnemies)
 	{
 		if(AAICharacterTestP* IAEnemy = Cast<AAICharacterTestP>(Enemy))
+		{			
 			Cast<UAnimClassForIA>(IAEnemy->GetMesh()->GetAnimInstance())->bWon = true;
+			IAEnemy->GetCharacterMovement()->MaxWalkSpeed = 0.0;;
+			IAEnemy->GetCharacterMovement()->Velocity = FVector(0.0,0.0,0.0);
+		}
 	}
 	GameHUD->DisplayDeathMessage();
 }

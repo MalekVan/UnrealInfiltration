@@ -45,6 +45,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USpringArmComponent* ComponentCameraBoom;
 
+	bool bCanMove = true;
+
 protected:
 
 	/** Resets HMD orientation in VR. */

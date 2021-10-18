@@ -4,7 +4,7 @@
 #include "Projet2GameMode.h"
 #include "GameFramework/Actor.h"
 #include "AICharacterTestP.h"
-#include "Components/BoxComponent.h"
+#include "BotTargetPointTestP.h"
 
 // Sets default values
 ASpawnerOfIA::ASpawnerOfIA()
@@ -17,6 +17,9 @@ ASpawnerOfIA::ASpawnerOfIA()
 void ASpawnerOfIA::BeginPlay()
 {
 	Super::BeginPlay();
+
+	int i = FMath::RandRange(0, Spawners.Num()-1);
+	
 	AProjet2GameMode* Gamemode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
 	Gamemode->SpawnerIA = this;
 	Gamemode->MakeCheckForSpawn();
