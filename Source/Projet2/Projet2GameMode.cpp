@@ -4,6 +4,7 @@
 #include "GameHUD.h"
 #include "AICharacterTestP.h"
 #include "TimerManager.h"
+#include "BotTargetPointTestP.h"
 #include "AnimClassForIA.h"
 #include "MyAIControllerTestP.h"
 #include "Projet2Character.h"
