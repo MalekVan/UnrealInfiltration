@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Collectible.h"
+#include "SpawnerOfIA.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "GameFramework/Character.h"
 #include "AICharacterTestP.generated.h"
@@ -32,7 +33,7 @@ protected:
 	void OnStaticMeshBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 
 public:	
-	// Called every frame
+	// Called every frame 
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
@@ -51,6 +52,7 @@ public:
 	
 	class ACollectible* Fruit;
 
+	bool bCanMove;
 	bool bIsDetecting;
 	bool bHaveFruitInHand;
 	bool bFruitToDropDown;

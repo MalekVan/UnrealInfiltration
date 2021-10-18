@@ -38,8 +38,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "IAToSpawn")
 	TSubclassOf<AAICharacterTestP> IAClass;
-
 	
+	FTimerHandle timerhandle;
 	
 	void MakeCheckForSpawn();
 	void SpawnIA();

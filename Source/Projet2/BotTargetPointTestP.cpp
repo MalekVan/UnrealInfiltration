@@ -18,3 +18,8 @@ ABotTargetPointTestP::ABotTargetPointTestP()
 	SocleMesh->SetupAttachment(RootComponent);	
 	SocleMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);	
 }
+
+void ABotTargetPointTestP::SpawnFruitOnPoint()
+{
+	
+}
