@@ -2,6 +2,7 @@
 
 #include "SpawnerOfIA.h"
 #include "Projet2GameMode.h"
+#include "GameFramework/Actor.h"
 #include "AICharacterTestP.h"
 #include "Components/BoxComponent.h"
 
@@ -10,11 +11,6 @@ ASpawnerOfIA::ASpawnerOfIA()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
- 
-	BoxCollision -> OnComponentBeginOverlap.AddDynamic(this, &ASpawnerOfIA::OnBoxBeginOverlap);
-
 }
 
 // Called when the game starts or when spawned
@@ -24,17 +20,22 @@ void ASpawnerOfIA::BeginPlay()
 	AProjet2GameMode* Gamemode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
 	Gamemode->SpawnerIA = this;
 	Gamemode->MakeCheckForSpawn();
-}
 
-void ASpawnerOfIA::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-
+	//Apres une minute, on augmente le nombre d'IA de 1
+	GetWorldTimerManager().SetTimer(timerhandle, this, &ASpawnerOfIA::IncreaseNumberMaxOfIA, 60.0f, false);
 }
 
 // Called every frame
 void ASpawnerOfIA::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
 
+void ASpawnerOfIA::IncreaseNumberMaxOfIA()
+{
+	UE_LOG(LogTemp, Warning, TEXT("INCREASE ENNEMY NUMBER"));
+	AProjet2GameMode* Gamemode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
+	Gamemode->NumberOfEnnemyMax ++;
+	Gamemode->MakeCheckForSpawn();
 }
 
