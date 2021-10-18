@@ -4,8 +4,10 @@
 #include "BotTargetPointTestP.h"
 
 #include "AICharacterTestP.h"
+#include "Projet2GameMode.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 ABotTargetPointTestP::ABotTargetPointTestP()
 {
@@ -16,10 +18,17 @@ ABotTargetPointTestP::ABotTargetPointTestP()
 	//ETIENNE
 	SocleMesh  = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SocleMesh"));
 	SocleMesh->SetupAttachment(RootComponent);	
-	SocleMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);	
+	SocleMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void ABotTargetPointTestP::BeginPlay()
+{
+	Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode())->AddTargetPoint(this);
 }
 
 void ABotTargetPointTestP::SpawnFruitOnPoint()
 {
-	
+	AProjet2GameMode* GameMode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
+	FActorSpawnParameters SpawnInfo;
+	GetWorld()->SpawnActor<ACollectible>(GameMode->CollectibleClass, GetActorLocation(), FRotator(0.0,0.0,0.0), SpawnInfo);
 }

@@ -16,6 +16,8 @@ class PROJET2_API ABotTargetPointTestP : public ATargetPoint
 	public : 
 	ABotTargetPointTestP();
 
+	virtual void BeginPlay() override;
+	
 	void SpawnFruitOnPoint();
 
 	//BOX COLLISION NE MARCHE PAS EN JEU, POURQUOI ?????? NAPPARAIT MEME PAS DANS LA VUE EN JEU

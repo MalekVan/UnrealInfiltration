@@ -41,9 +41,6 @@ public:
 
 	void AttachAFruitToSocket(ACollectible* collectible);
 	ACollectible* CreateFruit();
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "CollectibleToSpawn")
-	TSubclassOf<ACollectible> collectibleClass;
 	
 	void PutDownAFruit();
 

@@ -80,9 +80,10 @@ void AAICharacterTestP::AttachAFruitToSocket(ACollectible* collectible)
 
 ACollectible* AAICharacterTestP::CreateFruit()
 {
+	AProjet2GameMode* GameMode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
 	FRotator Rotation(0.0f, 0.0f, 0.0f);
 	FActorSpawnParameters SpawnInfo;
-	ACollectible* fruitt =  GetWorld()->SpawnActor<ACollectible>(collectibleClass, this->GetActorLocation(), Rotation, SpawnInfo);
+	ACollectible* fruitt =  GetWorld()->SpawnActor<ACollectible>(GameMode->CollectibleClass, this->GetActorLocation(), Rotation, SpawnInfo);
 
 	AProjet2GameMode* Gamemode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
 	Gamemode->NumberOfFruitsSpawn ++;
