@@ -3,7 +3,6 @@
 #include "Projet2GameMode.h"
 #include "GameHUD.h"
 #include "AICharacterTestP.h"
-#include "TimerManager.h"
 #include "AnimClassForIA.h"
 #include "MyAIControllerTestP.h"
 #include "Projet2Character.h"
@@ -11,6 +10,7 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "UObject/ConstructorHelpers.h"
+#include "BotTargetPointTestP.h"
 
 AProjet2GameMode::AProjet2GameMode()
 {
