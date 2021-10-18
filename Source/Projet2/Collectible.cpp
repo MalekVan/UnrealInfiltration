@@ -57,6 +57,7 @@ void ACollectible::Pickup(ACharacter* owner)
 		
 		this->AttachToComponent(mesh, rules, socketInstance->GetFName());
 		SetActorRelativeLocation(FVector(0.0,40,100));
+		OwnerOfTheObject = owner;
 	}
 }
 

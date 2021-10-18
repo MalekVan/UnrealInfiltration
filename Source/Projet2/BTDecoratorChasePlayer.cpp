@@ -5,17 +5,24 @@
 #include "MyAIControllerTestP.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
+UBTDecoratorChasePlayer::UBTDecoratorChasePlayer()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Constructeur du Decorator"));
+	FlowAbortMode = EBTFlowAbortMode::Both;  
+}
+
 bool UBTDecoratorChasePlayer::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
 {
+	Super::CalculateRawConditionValue(OwnerComp, NodeMemory);
 	AMyAIControllerTestP* controller = Cast<AMyAIControllerTestP>(OwnerComp.GetOwner());
-	if (bPlayerNextToMe)
+
+	if (controller->GetBlackboardComp() == OwnerComp.GetBlackboardComponent())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("DECORATOR CHASE PLAYER ACTIVE"));
+		
 	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("DECORATOR CHASE PLAYER NOT ACTIVE"));
-	}
+	UE_LOG(LogTemp, Warning, TEXT("DECORATOR RRRRRR"));
+
 	
 	return controller->GetBlackboardComponent()->GetValueAsBool("DetectPlayer") == bPlayerNextToMe;
 }
+

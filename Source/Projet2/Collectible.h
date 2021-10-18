@@ -20,7 +20,8 @@ public:
 	ACollectible* AThisObject = nullptr;
 
 	UStaticMeshComponent* StaticMesh;
-	
+
+	ACharacter* OwnerOfTheObject = nullptr;
 	bool bIsCarried = false;
 protected:
 	// Called when the game starts or when spawned
