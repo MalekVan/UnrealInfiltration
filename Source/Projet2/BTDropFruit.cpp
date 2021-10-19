@@ -25,21 +25,30 @@ EBTNodeResult::Type UBTDropFruit::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 			
 			if (fruit && tempPoint)
 			{
-				IAchara->PutDownAFruit();
-				fruit->StaticMesh->SetupAttachment(tempPoint->GetRootComponent());
-				fruit->StaticMesh->SetSimulatePhysics(false);
-				tempPoint->bFruitOnThisTargetPoint=true;
+				if(!AICon->GetBlackboardComp()->GetValueAsBool("DetectPlayer"))
+				{
+					IAchara->PutDownAFruit();
+					FAttachmentTransformRules AttachmentTransformRules = FAttachmentTransformRules::SnapToTargetNotIncludingScale;
+					fruit->StaticMesh->AttachToComponent(tempPoint->GetRootComponent(), AttachmentTransformRules);
+					fruit->SetActorRelativeLocation(FVector(0.0,0.0,-30.0));
+					fruit->StaticMesh->SetSimulatePhysics(false);
+					tempPoint->bFruitOnThisTargetPoint = true;
 
-				//animClass->IsCarry = false;
+					//animClass->IsCarry = false;
 
-				//Le joueur perd le fruit de ses mains
-				IAchara->bHaveFruitInHand = false;
-				AICon->GetBlackboardComp()->SetValueAsBool("HaveFruitInHands", false);
+					//Le joueur perd le fruit de ses mains
+					IAchara->bHaveFruitInHand = false;
+					AICon->GetBlackboardComp()->SetValueAsBool("HaveFruitInHands", false);
+				} else
+				{					
+					IAchara->PutDownAFruit();
+					fruit->StaticMesh->SetSimulatePhysics(false);
+					IAchara->bHaveFruitInHand = false;
+					AICon->GetBlackboardComp()->SetValueAsBool("HaveFruitInHands", false);
+				}
 			}
 		}
-		
 	}
 	return  EBTNodeResult::Succeeded;
-	return EBTNodeResult::Failed;
 }
 
