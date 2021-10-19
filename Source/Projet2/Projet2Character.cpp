@@ -209,7 +209,7 @@ void AProjet2Character::TouchStopped(ETouchIndex::Type FingerIndex, FVector Loca
 
 void AProjet2Character::TurnAtRate(float Rate)
 {
-	if(!AnimInstanceOfSkeletalMesh->IsSitting)
+	if(!AnimInstanceOfSkeletalMesh->IsSitting && !bCanMove)
 	{
 		// calculate delta for this frame from the rate information
 		AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
@@ -218,7 +218,7 @@ void AProjet2Character::TurnAtRate(float Rate)
 
 void AProjet2Character::LookUpAtRate(float Rate)
 {
-	if(!AnimInstanceOfSkeletalMesh->IsSitting)
+	if(!AnimInstanceOfSkeletalMesh->IsSitting && !bCanMove)
 	{
 		// calculate delta for this frame from the rate information
 		AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
