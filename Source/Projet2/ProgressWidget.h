@@ -24,6 +24,9 @@ public:
 	
 	void DisplayDeathMessage();
 	void DisplayVictoryMessage();
+	void DisplayButtonEndGame();
+
+	//virtual bool Initialize() override;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* TXTDeathMessage;
@@ -33,5 +36,10 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	UProgressBar* PBProgressBar;
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	UButton* RestartButton;
+
+	UFUNCTION()
+	void StartButtonClicked();
 };
