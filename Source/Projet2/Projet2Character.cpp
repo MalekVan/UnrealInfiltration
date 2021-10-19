@@ -157,7 +157,7 @@ void AProjet2Character::RunButtonPressed()
 {
 	if (!bIsCarry) // Si le joueur porte quelque chose il ne peut pas se mettre a courir. 
 	{
-		GetCharacterMovement()->MaxWalkSpeed = 600;
+		GetCharacterMovement()->MaxWalkSpeed = 500;
 	}
 }
 
