@@ -44,7 +44,12 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USpringArmComponent* ComponentCameraBoom;
-
+	
+	ACollectible* HoldedCollectible = nullptr;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool bIsCarry;
+	
 	bool bCanMove = true;
 
 protected:
@@ -62,11 +67,6 @@ protected:
 
 	void ZoomIn();
 	void ZoomOut();
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	bool bIsCarry;
-
-	ACollectible* HoldedCollectible = nullptr;
 
 	//CAMERA VARIABLES
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

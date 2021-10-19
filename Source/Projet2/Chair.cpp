@@ -2,7 +2,7 @@
 
 
 #include "Chair.h"
-
+#include "Components/CapsuleComponent.h"
 #include "Projet2Character.h"
 
 AChair::AChair()
@@ -27,13 +27,15 @@ void AChair::SitOnChair(ACharacter* owner)
 	
 	if(player->AnimInstanceOfSkeletalMesh->IsSitting)
 	{
-		player->SetActorEnableCollision(true);		
+		player->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		player->AnimInstanceOfSkeletalMesh->IsSitting = false;
 		player->bCanMove = true;
 	} else
 	{
 		player->AnimInstanceOfSkeletalMesh->IsSitting = true;
 		player->SetActorEnableCollision(false);
+		player->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+		
 		player->bCanMove = false;
 		for (int i=0; i<=100; i++)
 		{

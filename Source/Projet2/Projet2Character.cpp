@@ -4,7 +4,6 @@
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
@@ -15,6 +14,7 @@
 #include "Projet2GameMode.h"
 #include "GameHUD.h"
 #include "Interactable.h"
+#include "Chest.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AProjet2Character
@@ -209,20 +209,14 @@ void AProjet2Character::TouchStopped(ETouchIndex::Type FingerIndex, FVector Loca
 
 void AProjet2Character::TurnAtRate(float Rate)
 {
-	if(!AnimInstanceOfSkeletalMesh->IsSitting && !bCanMove)
-	{
-		// calculate delta for this frame from the rate information
-		AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
-	}
+	// calculate delta for this frame from the rate information
+	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
 
 void AProjet2Character::LookUpAtRate(float Rate)
 {
-	if(!AnimInstanceOfSkeletalMesh->IsSitting && !bCanMove)
-	{
-		// calculate delta for this frame from the rate information
-		AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
-	}
+	// calculate delta for this frame from the rate information
+	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
 void AProjet2Character::MoveForward(float Value)
@@ -263,12 +257,13 @@ void AProjet2Character::MoveRight(float Value)
 void AProjet2Character::Interact()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Interact %s"), bIsCarry ? TEXT("True") : TEXT("False"));
-	if(!bIsCarry)
-	{
-		// Detection de tous les AInteractable autour du joueur
-		TArray<AActor*> OverlappingActors = TArray<AActor*>();
-		GetOverlappingActors(OverlappingActors, AInteractable::StaticClass());
+
+	// Detection de tous les AInteractable autour du joueur
+	TArray<AActor*> OverlappingActors = TArray<AActor*>();
+	GetOverlappingActors(OverlappingActors, AInteractable::StaticClass());
 	
+	if(!bIsCarry)
+	{	
 		if(OverlappingActors.Num() == 1) // S'il n'y en a qu'un, on interagit avec
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Interact1"));
@@ -284,7 +279,8 @@ void AProjet2Character::Interact()
 				}
 				InteractableActor->Interact(this);
 			}
-		} else if(OverlappingActors.Num() > 1) // S'il y en a plusieurs, on interagit avec le plus proche
+		}
+		else if(OverlappingActors.Num() > 1) // S'il y en a plusieurs, on interagit avec le plus proche
 		{
 			float ClosestDistance = 9001;
 			AActor* ClosestActor = nullptr;
@@ -313,13 +309,32 @@ void AProjet2Character::Interact()
 		AnimInstanceOfSkeletalMesh->IsCarry = bIsCarry;
 	} else
 	{
-		HoldedCollectible->Drop();
-		HoldedCollectible = nullptr;
-		bIsCarry = false;
-		AnimInstanceOfSkeletalMesh->IsCarry = bIsCarry;
+		if(OverlappingActors.Num() == 1) // S'il n'y en a qu'un, on interagit avec
+		{
+			if(AChest* Chest = Cast<AChest>(*OverlappingActors.GetData()))
+			{
+				Chest->Interact(this);
+			}
+		}
+		else if(OverlappingActors.Num() > 1) // S'il y en a plusieurs, on interagit avec le plus proche
+		{
+			for(AActor* Actor : OverlappingActors)
+			{
+				if(AChest* Chest = Cast<AChest>(*OverlappingActors.GetData()))
+				{
+					Chest->Interact(this);
+					break;
+				}
+			}
+		} else
+		{
+			HoldedCollectible->Drop();
+			HoldedCollectible = nullptr;
+			bIsCarry = false;
+			AnimInstanceOfSkeletalMesh->IsCarry = bIsCarry;
+		}
 	}
 	UpdateMovementState();
-	GameMode->AddScore(1);
 }
 
 float AProjet2Character::GetDistanceBetweenVectors(FVector From, FVector To)
