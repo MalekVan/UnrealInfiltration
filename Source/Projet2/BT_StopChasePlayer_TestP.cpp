@@ -14,6 +14,8 @@ EBTNodeResult::Type UBT_StopChasePlayer_TestP::ExecuteTask(UBehaviorTreeComponen
 	if (AICon)
 	{
 		AICon->GetCharacter()->GetCharacterMovement()->MaxWalkSpeed = 200;
+		OwnerComp.GetBlackboardComponent()->SetValueAsBool("WasChasing", false);
+
 		AAICharacterTestP* AIChar = Cast<AAICharacterTestP>(AICon->GetCharacter());
 		if (AIChar && AIChar->Fruit)
 		{
