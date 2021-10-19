@@ -22,6 +22,7 @@ public:
 	void CheckForVictory();
 	void Victory();
 	void Defeat();
+	void ShowMouseForClick();
 	
 	class AGameHUD* GameHUD;
 

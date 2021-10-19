@@ -29,11 +29,12 @@ void AChair::SitOnChair(ACharacter* owner)
 	{
 		player->SetActorEnableCollision(true);		
 		player->AnimInstanceOfSkeletalMesh->IsSitting = false;
+		player->bCanMove = true;
 	} else
 	{
 		player->AnimInstanceOfSkeletalMesh->IsSitting = true;
 		player->SetActorEnableCollision(false);
-		
+		player->bCanMove = false;
 		for (int i=0; i<=100; i++)
 		{
 			owner->SetActorLocation(FMath::Lerp(PlayerLocation, SittingPosition, i/100));
