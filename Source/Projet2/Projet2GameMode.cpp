@@ -47,8 +47,9 @@ void AProjet2GameMode::CheckForVictory()
 
 void AProjet2GameMode::Victory()
 {
-	Cast<AProjet2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->AnimInstanceOfSkeletalMesh->bWon = true;
-	Cast<AProjet2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->bCanMove = false;
+	AProjet2Character* chara = Cast<AProjet2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	chara->AnimInstanceOfSkeletalMesh->bWon = true;
+	chara->bCanMove = false;
 
 	TArray<AActor*> AllEnemies;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAICharacterTestP::StaticClass(), AllEnemies);
@@ -65,12 +66,15 @@ void AProjet2GameMode::Victory()
 	}
 
 	GameHUD->DisplayVictoryMessage();
+	chara->GetController()->SetIgnoreLookInput(true);
+	ShowMouseForClick();
 }
 
 void AProjet2GameMode::Defeat()
 {
-	Cast<AProjet2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->AnimInstanceOfSkeletalMesh->bLost = true;
-	Cast<AProjet2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->bCanMove = false;
+	AProjet2Character* chara = Cast<AProjet2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	chara->AnimInstanceOfSkeletalMesh->bLost = true;
+	chara->bCanMove = false;
 	
 	TArray<AActor*> AllEnemies;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAICharacterTestP::StaticClass(), AllEnemies);
@@ -86,6 +90,17 @@ void AProjet2GameMode::Defeat()
 		}
 	}
 	GameHUD->DisplayDeathMessage();
+	chara->GetController()->SetIgnoreLookInput(true);
+	ShowMouseForClick();
+}
+
+void AProjet2GameMode::ShowMouseForClick()
+{
+	APlayerController* MyController = Cast<APlayerController>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)->GetController());
+ 
+	MyController->bShowMouseCursor = true;
+	MyController->bEnableClickEvents = true;
+	MyController->bEnableMouseOverEvents = true;
 }
 
 void AProjet2GameMode::MakeCheckForSpawn()
