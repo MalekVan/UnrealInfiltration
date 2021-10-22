@@ -29,8 +29,8 @@ void UProgressWidget::NativeConstruct() {
 }
 
 void UProgressWidget::UpdateProgressWidget(int CurrentScore, int MaxScore) {
-	double value = (double)CurrentScore / (double)MaxScore;
-	PBProgressBar->SetPercent(value);
+	double Value = (double)CurrentScore / (double)MaxScore;
+	PBProgressBar->SetPercent(Value);
 }
 
 void UProgressWidget::DisplayDeathMessage()

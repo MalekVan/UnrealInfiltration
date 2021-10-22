@@ -21,7 +21,7 @@ void AChest::StoreFruit(ACharacter* Actor)
 			Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode())->AddScore(1);
 			Player->HoldedCollectible = nullptr;
 			Player->bIsCarry = false;
-			Player->AnimInstanceOfSkeletalMesh->IsCarry = Player->bIsCarry;
+			Player->AnimInstanceOfSkeletalMesh->bIsCarry = Player->bIsCarry;
 		}
 	}
 }

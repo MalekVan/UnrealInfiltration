@@ -23,5 +23,5 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	virtual void Interact(ACharacter* owner){};
+	virtual void Interact(ACharacter* Player){};
 };

@@ -2,19 +2,19 @@
 
 
 #include "BTChasePlayer.h"
-#include "MyAIControllerTestP.h"
+#include "MyAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Kismet/GameplayStatics.h"
 
 EBTNodeResult::Type UBTChasePlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	UBlackboardComponent* bbComp = OwnerComp.GetBlackboardComponent();
-	AMyAIControllerTestP* controller = Cast<AMyAIControllerTestP>(OwnerComp.GetAIOwner());
-	FVector playerLocation = bbComp->GetValueAsVector("JoueurPos");
+	UBlackboardComponent* BBComp = OwnerComp.GetBlackboardComponent();
+	AMyAIController* Controller = Cast<AMyAIController>(OwnerComp.GetAIOwner());
+	FVector PlayerLocation = BBComp->GetValueAsVector("PlayerPos");
 	OwnerComp.GetBlackboardComponent()->SetValueAsBool("WasChasing", true);
 
-	UAIBlueprintHelperLibrary::SimpleMoveToLocation(controller, playerLocation);
+	UAIBlueprintHelperLibrary::SimpleMoveToLocation(Controller, PlayerLocation);
 	FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 	return EBTNodeResult::Succeeded;
 }

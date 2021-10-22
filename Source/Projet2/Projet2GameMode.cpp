@@ -2,16 +2,15 @@
 
 #include "Projet2GameMode.h"
 #include "GameHUD.h"
-#include "AICharacterTestP.h"
-#include "TimerManager.h"
-#include "AnimClassForIA.h"
-#include "MyAIControllerTestP.h"
+#include "AICharacter.h"
+#include "AnimClassForAI.h"
+#include "MyAIController.h"
 #include "Projet2Character.h"
-#include "SpawnerOfIA.h"
+#include "SpawnerOfAI.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "UObject/ConstructorHelpers.h"
-#include "BotTargetPointTestP.h"
+#include "BotTargetPoint.h"
 
 AProjet2GameMode::AProjet2GameMode()
 {
@@ -26,8 +25,8 @@ AProjet2GameMode::AProjet2GameMode()
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
 
-	AliveEnemies = TArray<AAICharacterTestP*>();
-	TargetPoints = TArray<ABotTargetPointTestP*>();
+	AliveEnemies = TArray<AAICharacter*>();
+	TargetPoints = TArray<ABotTargetPoint*>();
 }
 
 void AProjet2GameMode::AddScore(int Value)
@@ -47,50 +46,49 @@ void AProjet2GameMode::CheckForVictory()
 
 void AProjet2GameMode::Victory()
 {
-	AProjet2Character* chara = Cast<AProjet2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	chara->AnimInstanceOfSkeletalMesh->bWon = true;
-	chara->bCanMove = false;
+	AProjet2Character* Character = Cast<AProjet2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	Character->AnimInstanceOfSkeletalMesh->bWon = true;
+	Character->bCanMove = false;
 
 	TArray<AActor*> AllEnemies;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAICharacterTestP::StaticClass(), AllEnemies);
-	//TActorIterator<AAICharacterTestP> ActorItr = TActorIterator<AAICharacterTestP>(GetWorld());
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAICharacter::StaticClass(), AllEnemies);
 
 	for (AActor* Enemy : AllEnemies)
 	{
-		if(AAICharacterTestP* IAEnemy = Cast<AAICharacterTestP>(Enemy))
+		if(AAICharacter* IAEnemy = Cast<AAICharacter>(Enemy))
 		{
-			Cast<UAnimClassForIA>(IAEnemy->GetMesh()->GetAnimInstance())->bLost = true;
+			Cast<UAnimClassForAI>(IAEnemy->GetMesh()->GetAnimInstance())->bLost = true;
 			IAEnemy->GetCharacterMovement()->MaxWalkSpeed = 0.0;;
 			IAEnemy->GetCharacterMovement()->Velocity = FVector(0.0,0.0,0.0);
 		}
 	}
 
 	GameHUD->DisplayVictoryMessage();
-	chara->GetController()->SetIgnoreLookInput(true);
+	Character->GetController()->SetIgnoreLookInput(true);
 	ShowMouseForClick();
 }
 
 void AProjet2GameMode::Defeat()
 {
-	AProjet2Character* chara = Cast<AProjet2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	chara->AnimInstanceOfSkeletalMesh->bLost = true;
-	chara->bCanMove = false;
+	AProjet2Character* Character = Cast<AProjet2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	Character->AnimInstanceOfSkeletalMesh->bLost = true;
+	Character->bCanMove = false;
 	
 	TArray<AActor*> AllEnemies;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAICharacterTestP::StaticClass(), AllEnemies);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAICharacter::StaticClass(), AllEnemies);
 	//TActorIterator<AAICharacterTestP> ActorItr = TActorIterator<AAICharacterTestP>(GetWorld());
 
 	for (AActor* Enemy : AllEnemies)
 	{
-		if(AAICharacterTestP* IAEnemy = Cast<AAICharacterTestP>(Enemy))
+		if(AAICharacter* IAEnemy = Cast<AAICharacter>(Enemy))
 		{			
-			Cast<UAnimClassForIA>(IAEnemy->GetMesh()->GetAnimInstance())->bWon = true;
+			Cast<UAnimClassForAI>(IAEnemy->GetMesh()->GetAnimInstance())->bWon = true;
 			IAEnemy->GetCharacterMovement()->MaxWalkSpeed = 0.0;;
 			IAEnemy->GetCharacterMovement()->Velocity = FVector(0.0,0.0,0.0);
 		}
 	}
 	GameHUD->DisplayDeathMessage();
-	chara->GetController()->SetIgnoreLookInput(true);
+	Character->GetController()->SetIgnoreLookInput(true);
 	ShowMouseForClick();
 }
 
@@ -117,37 +115,35 @@ void AProjet2GameMode::SpawnIA()
 {
 	FRotator Rotation(0.0f, 0.0f, 0.0f);
 	FActorSpawnParameters SpawnInfo;
-	AAICharacterTestP* refCharSpawn=  GetWorld()->SpawnActor<AAICharacterTestP>(IAClass, SpawnerIA->GetActorLocation(), Rotation, SpawnInfo);
-	AMyAIControllerTestP* refController = nullptr;
-	if (refCharSpawn)
+	AAICharacter* RefCharSpawn=  GetWorld()->SpawnActor<AAICharacter>(AIClass, SpawnerIA->GetActorLocation(), Rotation, SpawnInfo);
+	AMyAIController* RefController = nullptr;
+	if (RefCharSpawn)
 	{
-		refController = Cast<AMyAIControllerTestP>(refCharSpawn->GetController());
+		RefController = Cast<AMyAIController>(RefCharSpawn->GetController());
 	}
-	if (refController)
+	if (RefController)
 	{
-		refController->GetBlackboardComp()->SetValueAsObject("BasePosition", SpawnerIA);
+		RefController->GetBlackboardComp()->SetValueAsObject("BasePosition", SpawnerIA);
 	}
-	AddEnemy(refCharSpawn);
+	AddEnemy(RefCharSpawn);
 }
 
-void AProjet2GameMode::AddEnemy(AAICharacterTestP* Enemy)
+void AProjet2GameMode::AddEnemy(AAICharacter* Enemy)
 {
 	AliveEnemies.Add(Enemy);
 }
 
-void AProjet2GameMode::RemoveEnemy(AAICharacterTestP* Enemy)
+void AProjet2GameMode::RemoveEnemy(AAICharacter* Enemy)
 {
 	AliveEnemies.Remove(Enemy);
 }
 
-void AProjet2GameMode::AddTargetPoint(ABotTargetPointTestP* TargetPoint)
+void AProjet2GameMode::AddTargetPoint(ABotTargetPoint* TargetPoint)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Add TP"));
 	TargetPoints.Add(TargetPoint);
 
 	if(TargetPoints.Num() == 9)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("TP PLUS 10"));
 		int RandomInt = FMath::RandRange(0, TargetPoints.Num()-1);
 		TargetPoints[RandomInt]->SpawnFruitOnPoint();
 	}

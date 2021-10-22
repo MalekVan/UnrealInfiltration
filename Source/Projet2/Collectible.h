@@ -31,8 +31,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void Interact(ACharacter* owner) override;
+	void Interact(ACharacter* Player) override;
 
-	virtual void Pickup(ACharacter* owner);
+	virtual void Pickup(ACharacter* Player);
 	virtual void Drop();
 };

@@ -11,38 +11,37 @@ AChair::AChair()
 	StaticMesh->SetupAttachment(RootComponent);
 }
 
-void AChair::Interact(ACharacter* owner)
+void AChair::Interact(ACharacter* Player)
 {
-	SitOnChair(owner);
+	SitOnChair(Player);
 }
 
-void AChair::SitOnChair(ACharacter* owner)
+void AChair::SitOnChair(ACharacter* Player)
 {
-	UE_LOG(LogTemp, Warning, TEXT("SIT"));
-	AProjet2Character* player = Cast<AProjet2Character>(owner);
+	AProjet2Character* PlayerCharacter = Cast<AProjet2Character>(Player);
 
-	FVector PlayerLocation = owner->GetActorLocation();
-	FRotator PlayerRotation = owner->GetActorRotation();
+	FVector PlayerLocation = Player->GetActorLocation();
+	FRotator PlayerRotation = Player->GetActorRotation();
 	FRotator EndRotation = FRotator(0,150,0);
 	
-	if(player->AnimInstanceOfSkeletalMesh->IsSitting)
+	if(PlayerCharacter->AnimInstanceOfSkeletalMesh->bIsSitting)
 	{
-		player->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-		player->AnimInstanceOfSkeletalMesh->IsSitting = false;
-		player->bCanMove = true;		
-		player->GetController()->SetIgnoreLookInput(false);
+		PlayerCharacter->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		PlayerCharacter->AnimInstanceOfSkeletalMesh->bIsSitting = false;
+		PlayerCharacter->bCanMove = true;		
+		PlayerCharacter->GetController()->SetIgnoreLookInput(false);
 	} else
 	{
-		player->AnimInstanceOfSkeletalMesh->IsSitting = true;
-		player->SetActorEnableCollision(false);
-		player->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-		player->GetController()->SetIgnoreLookInput(true);
+		PlayerCharacter->AnimInstanceOfSkeletalMesh->bIsSitting = true;
+		PlayerCharacter->SetActorEnableCollision(false);
+		PlayerCharacter->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+		PlayerCharacter->GetController()->SetIgnoreLookInput(true);
 		
-		player->bCanMove = false;
+		PlayerCharacter->bCanMove = false;
 		for (int i=0; i<=100; i++)
 		{
-			owner->SetActorLocation(FMath::Lerp(PlayerLocation, SittingPosition, i/100));
-			owner->SetActorRotation(FMath::Lerp(PlayerRotation, EndRotation, i/100));		
+			Player->SetActorLocation(FMath::Lerp(PlayerLocation, SittingPosition, i/100));
+			Player->SetActorRotation(FMath::Lerp(PlayerRotation, EndRotation, i/100));		
 		}
 	}	
 }

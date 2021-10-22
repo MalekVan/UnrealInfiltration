@@ -18,9 +18,9 @@ public:
 
 	ALadder();
 
-	void Interact(ACharacter* owner) override;
+	void Interact(ACharacter* Player) override;
 	
-	void ClimbLadder(ACharacter* owner);
+	void ClimbLadder(ACharacter* Player);
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* StaticMesh;

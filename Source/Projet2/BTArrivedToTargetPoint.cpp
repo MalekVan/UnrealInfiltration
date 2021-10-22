@@ -2,16 +2,14 @@
 
 
 #include "BTArrivedToTargetPoint.h"
-#include "MyAIControllerTestP.h"
-#include "AICharacterTestP.h"
+#include "MyAIController.h"
+#include "AICharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 EBTNodeResult::Type UBTArrivedToTargetPoint::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	AMyAIControllerTestP* AICon = Cast<AMyAIControllerTestP>(OwnerComp.GetAIOwner());
-	AAICharacterTestP* IAchara = Cast<AAICharacterTestP>(AICon->GetCharacter());
-
-	UE_LOG(LogTemp, Warning, TEXT("OUAIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"));
+	AMyAIController* AICon = Cast<AMyAIController>(OwnerComp.GetAIOwner());
+	AAICharacter* IAchara = Cast<AAICharacter>(AICon->GetCharacter());
 
 	if (AICon && AICon->ListOfDestinationPoints.Num() > 0)
 	{

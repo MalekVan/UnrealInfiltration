@@ -24,7 +24,7 @@ AProjet2Character::AProjet2Character()
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
-	// set our turn rates for input
+	// Set our turn rates for input
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
 
@@ -63,6 +63,7 @@ void AProjet2Character::SetupPlayerInputComponent(class UInputComponent* PlayerI
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
+	
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	
@@ -83,26 +84,11 @@ void AProjet2Character::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AProjet2Character::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &AProjet2Character::TouchStopped);
 
-	// VR headset functionality
-	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AProjet2Character::OnResetVR);
-
 	InputComponent->BindAction("Run", IE_Released, this,   &AProjet2Character::RunButtonReleased);
 	InputComponent->BindAction("Run", IE_Pressed, this,   &AProjet2Character::RunButtonPressed);
 
 	InputComponent->BindAction("ZoomIn", IE_Pressed, this,   &AProjet2Character::ZoomIn);
 	InputComponent->BindAction("ZoomOut", IE_Pressed, this,   &AProjet2Character::ZoomOut);
-}
-
-
-void AProjet2Character::OnResetVR()
-{
-	// If Projet2 is added to a project via 'Add Feature' in the Unreal Editor the dependency on HeadMountedDisplay in Projet2.Build.cs is not automatically propagated
-	// and a linker error will result.
-	// You will need to either:
-	//		Add "HeadMountedDisplay" to [YourProject].Build.cs PublicDependencyModuleNames in order to build successfully (appropriate if supporting VR).
-	// or:
-	//		Comment or delete the call to ResetOrientationAndPosition below (appropriate if not supporting VR)
-	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
 }
 
 void AProjet2Character::BeginPlay() {
@@ -111,26 +97,26 @@ void AProjet2Character::BeginPlay() {
 	
 	//ComponentSkeletalMesh = this->FindComponentByClass(new TSubclassOf<UActorComponent>::TClassType<USkeletalMeshComponent>);
 
-	//Obtenir une référence vers le skeletal mesh de Joris
+	// Get reference to player mesh
 	ComponentSkeletalMesh = GetMesh();
 	
 	if (ComponentSkeletalMesh)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("ComponentSkeletalMesh found ! "));
-		//Obtenir une référence vers l'anim instance de Joris
-		AnimInstanceOfSkeletalMesh = dynamic_cast<UAnimationClassForJoris*>((ComponentSkeletalMesh)? ComponentSkeletalMesh->GetAnimInstance() : nullptr);
+		// Get reference to player anim instance
+		AnimInstanceOfSkeletalMesh = dynamic_cast<UAnimClassForPlayer*>((ComponentSkeletalMesh)? ComponentSkeletalMesh->GetAnimInstance() : nullptr);
 	}
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("ComponentSkeletalMesh is empty ! "));
 	}
 
-	//Obtenir une référence vers le camera boom
+	// Get reference to camera boom
 	ComponentCameraBoom = FindComponentByClass<USpringArmComponent>();
 	if(ComponentCameraBoom)
 	{		
-		//Setup la valeur du camera arm
-		FuturValueOfZoom = ComponentCameraBoom->TargetArmLength;
+		// Setup camera arm value
+		fFuturValueOfZoom = ComponentCameraBoom->TargetArmLength;
 	}
 	
 	GameMode = Cast<AProjet2GameMode>(UGameplayStatics::GetGameMode(GetWorld()));
@@ -155,7 +141,7 @@ void AProjet2Character::RunButtonReleased()
 
 void AProjet2Character::RunButtonPressed()
 {
-	if (!bIsCarry) // Si le joueur porte quelque chose il ne peut pas se mettre a courir. 
+	if (!bIsCarry) // If the player is holding something he cannot run 
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 500;
 	}
@@ -163,35 +149,35 @@ void AProjet2Character::RunButtonPressed()
 
 void AProjet2Character::ZoomIn()
 {
-	if (ComponentCameraBoom->TargetArmLength > MinCameraZoom)
+	if (ComponentCameraBoom->TargetArmLength > iMinCameraZoom)
 	{
-		FuturValueOfZoom = ComponentCameraBoom->TargetArmLength - StepOfWheeling;
+		fFuturValueOfZoom = ComponentCameraBoom->TargetArmLength - iStepOfWheeling;
 	}
 }
 
 void AProjet2Character::ZoomOut()
 {
-	if (ComponentCameraBoom->TargetArmLength < MaxCameraZoom)
+	if (ComponentCameraBoom->TargetArmLength < iMaxCameraZoom)
 	{
-		FuturValueOfZoom = ComponentCameraBoom->TargetArmLength + StepOfWheeling;
+		fFuturValueOfZoom = ComponentCameraBoom->TargetArmLength + iStepOfWheeling;
 	}
 }
 
-void AProjet2Character::Tick(float deltaTime)
+void AProjet2Character::Tick(float DeltaTime)
 {
-	Super::Tick(deltaTime);
+	Super::Tick(DeltaTime);
 	
-	if (ComponentCameraBoom->TargetArmLength != FuturValueOfZoom)
+	if (ComponentCameraBoom->TargetArmLength != fFuturValueOfZoom)
 	{
-		if (FuturValueOfZoom > ComponentCameraBoom->TargetArmLength)
+		if (fFuturValueOfZoom > ComponentCameraBoom->TargetArmLength)
 		{
-			ComponentCameraBoom->TargetArmLength += SpeedOfWheeling;
-			if (FuturValueOfZoom <ComponentCameraBoom->TargetArmLength){FuturValueOfZoom = ComponentCameraBoom->TargetArmLength;}
+			ComponentCameraBoom->TargetArmLength += iSpeedOfWheeling;
+			if (fFuturValueOfZoom <ComponentCameraBoom->TargetArmLength){fFuturValueOfZoom = ComponentCameraBoom->TargetArmLength;}
 		}
-		if (FuturValueOfZoom < ComponentCameraBoom->TargetArmLength)
+		if (fFuturValueOfZoom < ComponentCameraBoom->TargetArmLength)
 		{
-			ComponentCameraBoom->TargetArmLength -= SpeedOfWheeling;
-			if (FuturValueOfZoom >ComponentCameraBoom->TargetArmLength){FuturValueOfZoom = ComponentCameraBoom->TargetArmLength;}
+			ComponentCameraBoom->TargetArmLength -= iSpeedOfWheeling;
+			if (fFuturValueOfZoom >ComponentCameraBoom->TargetArmLength){fFuturValueOfZoom = ComponentCameraBoom->TargetArmLength;}
 		}
 	}
 	
@@ -256,15 +242,13 @@ void AProjet2Character::MoveRight(float Value)
 
 void AProjet2Character::Interact()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Interact %s"), bIsCarry ? TEXT("True") : TEXT("False"));
-
-	// Detection de tous les AInteractable autour du joueur
+	// Detection of all AInteractable around the player
 	TArray<AActor*> OverlappingActors = TArray<AActor*>();
 	GetOverlappingActors(OverlappingActors, AInteractable::StaticClass());
 	
 	if(!bIsCarry)
 	{	
-		if(OverlappingActors.Num() == 1) // S'il n'y en a qu'un, on interagit avec
+		if(OverlappingActors.Num() == 1) // If there's only one, interact with it
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Interact1"));
 			AActor* OverlappedActor = *OverlappingActors.GetData();
@@ -280,7 +264,7 @@ void AProjet2Character::Interact()
 				InteractableActor->Interact(this);
 			}
 		}
-		else if(OverlappingActors.Num() > 1) // S'il y en a plusieurs, on interagit avec le plus proche
+		else if(OverlappingActors.Num() > 1) // If there are many, interact with the closest one
 		{
 			float ClosestDistance = 9001;
 			AActor* ClosestActor = nullptr;
@@ -306,17 +290,17 @@ void AProjet2Character::Interact()
 		{
 			UE_LOG(LogTemp, Warning, TEXT("No overlapping actors"));
 		}
-		AnimInstanceOfSkeletalMesh->IsCarry = bIsCarry;
+		AnimInstanceOfSkeletalMesh->bIsCarry = bIsCarry;
 	} else
 	{
-		if(OverlappingActors.Num() == 1) // S'il n'y en a qu'un, on interagit avec
+		if(OverlappingActors.Num() == 1) // If there's only one, interact with it
 		{
 			if(AChest* Chest = Cast<AChest>(*OverlappingActors.GetData()))
 			{
 				Chest->Interact(this);
 			}
 		}
-		else if(OverlappingActors.Num() > 1) // S'il y en a plusieurs, on interagit avec le plus proche
+		else if(OverlappingActors.Num() > 1) // If there are many, interact with the closest one
 		{
 			for(AActor* Actor : OverlappingActors)
 			{
@@ -331,7 +315,7 @@ void AProjet2Character::Interact()
 			HoldedCollectible->Drop();
 			HoldedCollectible = nullptr;
 			bIsCarry = false;
-			AnimInstanceOfSkeletalMesh->IsCarry = bIsCarry;
+			AnimInstanceOfSkeletalMesh->bIsCarry = bIsCarry;
 		}
 	}
 	UpdateMovementState();

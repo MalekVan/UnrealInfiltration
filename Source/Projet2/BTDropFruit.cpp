@@ -2,47 +2,42 @@
 
 
 #include "BTDropFruit.h"
-#include "MyAIControllerTestP.h"
-#include "AICharacterTestP.h"
-#include "BotTargetPointTestP.h"
+#include "MyAIController.h"
+#include "AICharacter.h"
+#include "BotTargetPoint.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "AnimClassForIA.h"
+#include "AnimClassForAI.h"
 
 EBTNodeResult::Type UBTDropFruit::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	AMyAIControllerTestP* AICon = Cast<AMyAIControllerTestP>(OwnerComp.GetAIOwner());
-	AAICharacterTestP* IAchara = Cast<AAICharacterTestP>(AICon->GetCharacter());
-	UAnimClassForIA* animClass = Cast<UAnimClassForIA>(IAchara->GetMesh()->GetAnimInstance());
+	AMyAIController* AICon = Cast<AMyAIController>(OwnerComp.GetAIOwner());
+	AAICharacter* IAchara = Cast<AAICharacter>(AICon->GetCharacter());
 	
 	if (AICon && IAchara && AICon->GetBlackboardComp()->GetValueAsBool("HaveFruitInHands"))
 	{
 		if (IAchara->bHaveFruitInHand)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("OVERLAP IA"));
-
-			ABotTargetPointTestP* tempPoint = AICon->ListOfDestinationPoints[0];
-			ACollectible* fruit =  IAchara->Fruit;
+			ABotTargetPoint* TempPoint = AICon->ListOfDestinationPoints[0];
+			ACollectible* Collectible =  IAchara->Fruit;
 			
-			if (fruit && tempPoint)
+			if (Collectible && TempPoint)
 			{
 				if(!AICon->GetBlackboardComp()->GetValueAsBool("DetectPlayer"))
 				{
 					IAchara->PutDownAFruit();
 					FAttachmentTransformRules AttachmentTransformRules = FAttachmentTransformRules::SnapToTargetNotIncludingScale;
-					fruit->StaticMesh->AttachToComponent(tempPoint->GetRootComponent(), AttachmentTransformRules);
-					fruit->SetActorRelativeLocation(FVector(0.0,0.0,-30.0));
-					fruit->StaticMesh->SetSimulatePhysics(false);
-					tempPoint->bFruitOnThisTargetPoint = true;
+					Collectible->StaticMesh->AttachToComponent(TempPoint->GetRootComponent(), AttachmentTransformRules);
+					Collectible->SetActorRelativeLocation(FVector(0.0,0.0,-30.0));
+					Collectible->StaticMesh->SetSimulatePhysics(false);
+					TempPoint->bFruitOnThisTargetPoint = true;
 
-					//animClass->IsCarry = false;
-
-					//Le joueur perd le fruit de ses mains
+					//Player drops fruit
 					IAchara->bHaveFruitInHand = false;
 					AICon->GetBlackboardComp()->SetValueAsBool("HaveFruitInHands", false);
 				} else
 				{					
 					IAchara->PutDownAFruit();
-					fruit->StaticMesh->SetSimulatePhysics(false);
+					Collectible->StaticMesh->SetSimulatePhysics(false);
 					IAchara->bHaveFruitInHand = false;
 					AICon->GetBlackboardComp()->SetValueAsBool("HaveFruitInHands", false);
 				}

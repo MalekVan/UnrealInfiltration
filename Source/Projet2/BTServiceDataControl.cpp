@@ -7,14 +7,14 @@
 
 void UBTServiceDataControl::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
-	UBlackboardComponent* BbComponent = OwnerComp.GetBlackboardComponent();
-	if (BbComponent->GetValueAsBool("DetectPlayer"))
+	UBlackboardComponent* BBComponent = OwnerComp.GetBlackboardComponent();
+	if (BBComponent->GetValueAsBool("DetectPlayer"))
 	{
-		APawn* player = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-		if (player->GetActorLocation() != BbComponent->GetValueAsVector("JoueurPos"))
+		APawn* Player = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+		if (Player->GetActorLocation() != BBComponent->GetValueAsVector("PlayerPos"))
 		{
-			BbComponent->SetValueAsVector("JoueurPos", player->GetActorLocation());
-			BbComponent->SetValueAsVector("LastPlayerDirection", player->GetActorForwardVector());
+			BBComponent->SetValueAsVector("PlayerPos", Player->GetActorLocation());
+			BBComponent->SetValueAsVector("LastPlayerDirection", Player->GetActorForwardVector());
 		}
 	}
 }

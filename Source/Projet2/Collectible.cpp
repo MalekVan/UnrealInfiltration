@@ -33,41 +33,37 @@ void ACollectible::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void ACollectible::Interact(ACharacter* owner)
+void ACollectible::Interact(ACharacter* Player)
 {
-	Pickup(owner);
+	Pickup(Player);
 }
 
-void ACollectible::Pickup(ACharacter* owner)
-{	
-	UE_LOG(LogTemp, Warning, TEXT("PICKUP"));
+void ACollectible::Pickup(ACharacter* Player)
+{
 	if(!bIsCarried)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("PICKUP START"));
 		bIsCarried = true;
 		SetActorEnableCollision(false);
 		StaticMesh->SetSimulatePhysics(false);
 
-		FName socket = TEXT("SocketNourriture");
+		FName Socket = TEXT("FoodSocket");
 
-		USkeletalMeshComponent* mesh = owner->GetMesh();
+		USkeletalMeshComponent* Mesh = Player->GetMesh();
 
-		const USkeletalMeshSocket* socketInstance = mesh->GetSocketByName(socket);
-		FAttachmentTransformRules rules = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true);
+		const USkeletalMeshSocket* SocketInstance = Mesh->GetSocketByName(Socket);
+		FAttachmentTransformRules AttachmentRules = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true);
 		
-		this->AttachToComponent(mesh, rules, socketInstance->GetFName());
+		this->AttachToComponent(Mesh, AttachmentRules, SocketInstance->GetFName());
 		SetActorRelativeLocation(FVector(0.0,40,100));
-		OwnerOfTheObject = owner;
+		OwnerOfTheObject = Player;
 	}
 }
 
 void ACollectible::Drop()
 {
-	UE_LOG(LogClass, Log, TEXT("Drop %s"), *GetName());
 	SetActorRelativeLocation(FVector(0.0,40.0,0.0));
 	this->DetachFromActor(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
 	SetActorEnableCollision(true);
 	StaticMesh->SetSimulatePhysics(false);
 	bIsCarried = false;
-
 }

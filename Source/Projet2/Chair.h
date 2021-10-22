@@ -18,9 +18,9 @@ public:
 
 	AChair();
 
-	void Interact(ACharacter* owner) override;
+	void Interact(ACharacter* Player) override;
 	
-	void SitOnChair(ACharacter* owner);
+	void SitOnChair(ACharacter* Player);
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* StaticMesh;

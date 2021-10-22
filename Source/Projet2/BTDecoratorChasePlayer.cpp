@@ -2,7 +2,7 @@
 
 
 #include "BTDecoratorChasePlayer.h"
-#include "MyAIControllerTestP.h"
+#include "MyAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 UBTDecoratorChasePlayer::UBTDecoratorChasePlayer()
@@ -14,15 +14,12 @@ UBTDecoratorChasePlayer::UBTDecoratorChasePlayer()
 bool UBTDecoratorChasePlayer::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
 {
 	Super::CalculateRawConditionValue(OwnerComp, NodeMemory);
-	AMyAIControllerTestP* controller = Cast<AMyAIControllerTestP>(OwnerComp.GetOwner());
+	AMyAIController* Controller = Cast<AMyAIController>(OwnerComp.GetOwner());
 
-	if (controller->GetBlackboardComp() == OwnerComp.GetBlackboardComponent())
+	if (Controller->GetBlackboardComp() == OwnerComp.GetBlackboardComponent())
 	{
 		
-	}
-	UE_LOG(LogTemp, Warning, TEXT("DECORATOR RRRRRR"));
-
-	
-	return controller->GetBlackboardComponent()->GetValueAsBool("DetectPlayer") == bPlayerNextToMe;
+	}	
+	return Controller->GetBlackboardComponent()->GetValueAsBool("DetectPlayer") == bPlayerNextToMe;
 }
 

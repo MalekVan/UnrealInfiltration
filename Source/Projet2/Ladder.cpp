@@ -12,21 +12,21 @@ ALadder::ALadder()
 	StaticMesh->SetupAttachment(RootComponent);
 }
 
-void ALadder::Interact(ACharacter* owner)
+void ALadder::Interact(ACharacter* Player)
 {
-	ClimbLadder(owner);
+	ClimbLadder(Player);
 }
 
-void ALadder::ClimbLadder(ACharacter* owner)
+void ALadder::ClimbLadder(ACharacter* Player)
 {
-	float DistanceToTop = AProjet2Character::GetDistanceBetweenVectors(owner->GetActorLocation(), HigherPosition);
-	float DistanceToBottom = AProjet2Character::GetDistanceBetweenVectors(owner->GetActorLocation(), LowerPosition);
+	float DistanceToTop = AProjet2Character::GetDistanceBetweenVectors(Player->GetActorLocation(), HigherPosition);
+	float DistanceToBottom = AProjet2Character::GetDistanceBetweenVectors(Player->GetActorLocation(), LowerPosition);
 
 	if(DistanceToTop > DistanceToBottom)
 	{
-		owner->SetActorLocation(HigherPosition);
+		Player->SetActorLocation(HigherPosition);
 	} else
 	{
-		owner->SetActorLocation(LowerPosition);
+		Player->SetActorLocation(LowerPosition);
 	}
 }

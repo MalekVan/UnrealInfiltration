@@ -11,26 +11,21 @@
 
 EBTNodeResult::Type UBTInvestigate::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	UBlackboardComponent* BbComp = OwnerComp.GetBlackboardComponent();
-	FHitResult hitResult;
-	FVector start = OwnerComp.GetAIOwner()->GetCharacter()->GetActorLocation();
+	UBlackboardComponent* BBComp = OwnerComp.GetBlackboardComponent();
+	FHitResult HitResult;
+	FVector Start = OwnerComp.GetAIOwner()->GetCharacter()->GetActorLocation();
 	//start.Z += 100;
-	FVector forward = BbComp->GetValueAsVector("LastPlayerDirection");
+	FVector Forward = BBComp->GetValueAsVector("LastPlayerDirection");
 
-	FVector end = start + (forward * 1000000); 
+	FVector End = Start + (Forward * 1000000); 
 
 	FCollisionQueryParams TraceParam;
 	
-	bool bHit = GetWorld()->LineTraceSingleByChannel(hitResult, start, end, ECC_Visibility, TraceParam);
+	bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, TraceParam);
 
 	if (bHit)
 	{
-		OwnerComp.GetBlackboardComponent()->SetValueAsVector("JoueurPos", hitResult.Location);
-		UE_LOG(LogTemp, Warning, TEXT("RAYCAST"));
+		OwnerComp.GetBlackboardComponent()->SetValueAsVector("PlayerPos", HitResult.Location);
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Investigate"));
-
-
 	return EBTNodeResult::Succeeded;
 }

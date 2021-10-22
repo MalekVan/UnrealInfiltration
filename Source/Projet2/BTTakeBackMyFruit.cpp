@@ -2,19 +2,19 @@
 
 
 #include "BTTakeBackMyFruit.h"
-#include "MyAIControllerTestP.h"
-#include "AICharacterTestP.h"
+#include "MyAIController.h"
+#include "AICharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 EBTNodeResult::Type UBTTakeBackMyFruit::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	AMyAIControllerTestP* AICon = Cast<AMyAIControllerTestP>(OwnerComp.GetAIOwner());
-	AAICharacterTestP* IAchara = Cast<AAICharacterTestP>(AICon->GetCharacter());
+	AMyAIController* AICon = Cast<AMyAIController>(OwnerComp.GetAIOwner());
+	AAICharacter* IAchara = Cast<AAICharacter>(AICon->GetCharacter());
 	
 	if (AICon && AICon->ListOfDestinationPoints.Num() > 0)
 	{
-		//Attacher le fruit à l'IA à nouveau
-		//Passer HaveFruitInHand a true
+		//Attach fruit to AI again
+		//Set HaveFruitInHand to true
 		
 		IAchara->AttachAFruitToSocket(IAchara->Fruit);
 		IAchara->bHaveFruitInHand = true;

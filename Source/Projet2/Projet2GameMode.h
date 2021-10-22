@@ -3,9 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AICharacterTestP.h"
+#include "AICharacter.h"
+#include "BotTargetPoint.h"
+#include "SpawnerOfAI.h"
 #include "GameFramework/GameMode.h"
 #include "Projet2GameMode.generated.h"
+
+class AGameHUD;
+class ASpawnerOfAI;
+class ABotTargetPoint;
 
 UCLASS()
 class AProjet2GameMode : public AGameMode
@@ -15,16 +21,16 @@ class AProjet2GameMode : public AGameMode
 public:
 	AProjet2GameMode();
 
-	void AddEnemy(AAICharacterTestP* Enemy);
-	void RemoveEnemy(AAICharacterTestP* Enemy);
+	void AddEnemy(AAICharacter* Enemy);
+	void RemoveEnemy(AAICharacter* Enemy);
 
-	void AddScore(int value);
+	void AddScore(int Value);
 	void CheckForVictory();
 	void Victory();
 	void Defeat();
 	void ShowMouseForClick();
 	
-	class AGameHUD* GameHUD;
+	AGameHUD* GameHUD;
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="VariablesGame")
 	int NumberOfEnnemyMax ;
@@ -35,25 +41,25 @@ public:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="VariablesGame")
 	int NumberOfFruitsMax ;
 
-	class ASpawnerOfIA* SpawnerIA;
+	ASpawnerOfAI* SpawnerIA;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "CollectibleToSpawn")
 	TSubclassOf<ACollectible> CollectibleClass;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "IAToSpawn")
-	TSubclassOf<AAICharacterTestP> IAClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "AIToSpawn")
+	TSubclassOf<AAICharacter> AIClass;
 
-	TArray<ABotTargetPointTestP*> TargetPoints;
+	TArray<ABotTargetPoint*> TargetPoints;
 	
-	FTimerHandle timerhandle;
+	FTimerHandle TimerHandle;
 	
 	void MakeCheckForSpawn();
 	void SpawnIA();
-	void AddTargetPoint(ABotTargetPointTestP* TargetPoint);
+	void AddTargetPoint(ABotTargetPoint* TargetPoint);
 
 protected:
 	int CurrentScore = 0;
 	int MaxScore = 5;
 
-	TArray<AAICharacterTestP*> AliveEnemies;
+	TArray<AAICharacter*> AliveEnemies;
 };

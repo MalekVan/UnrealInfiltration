@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AnimationClassForJoris.h"
+#include "AnimClassForPlayer.h"
 #include "Collectible.h"
 #include "GameFramework/Character.h"
 #include "Projet2Character.generated.h"
@@ -40,7 +40,7 @@ public:
 	USkeletalMeshComponent* ComponentSkeletalMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	UAnimationClassForJoris * AnimInstanceOfSkeletalMesh;
+	UAnimClassForPlayer * AnimInstanceOfSkeletalMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USpringArmComponent* ComponentCameraBoom;
@@ -53,9 +53,6 @@ public:
 	bool bCanMove = true;
 
 protected:
-
-	/** Resets HMD orientation in VR. */
-	void OnResetVR();
 	
 	virtual void BeginPlay() override;
 
@@ -70,17 +67,17 @@ protected:
 
 	//CAMERA VARIABLES
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 MaxCameraZoom;
+	int32 iMaxCameraZoom;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 MinCameraZoom;
+	int32 iMinCameraZoom;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 StepOfWheeling;
+	int32 iStepOfWheeling;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 SpeedOfWheeling;
+	int32 iSpeedOfWheeling;
 
-	float FuturValueOfZoom;
+	float fFuturValueOfZoom;
 
-	virtual void Tick(float deltaTime) override;
+	virtual void Tick(float DeltaTime) override;
 
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
