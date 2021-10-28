@@ -4,6 +4,7 @@
 #include "Engine/SkeletalMeshSocket.h"
 #include "Projet2Character.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 ACollectible::ACollectible()
@@ -59,6 +60,9 @@ void ACollectible::Pickup(ACharacter* Player)
 
 void ACollectible::Drop()
 {
+	if(AProjet2Character* Player = Cast<AProjet2Character>(OwnerOfTheObject))
+		Player->GetCharacterMovement()->MaxWalkSpeed = 500;
+	
 	SetActorRelativeLocation(FVector(0.0,40.0,0.0));
 	this->DetachFromActor(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
 	SetActorEnableCollision(true);

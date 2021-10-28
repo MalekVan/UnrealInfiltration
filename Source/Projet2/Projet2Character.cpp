@@ -235,6 +235,7 @@ void AProjet2Character::Interact()
 				if(OverlappedActor->IsA(ACollectible::StaticClass()))
 				{
 					HoldedCollectible = Cast<ACollectible>(OverlappedActor);
+					GetCharacterMovement()->MaxWalkSpeed = 300;
 					bIsCarry = true;
 				}
 				InteractableActor->Interact(this);
