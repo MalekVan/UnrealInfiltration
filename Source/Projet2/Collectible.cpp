@@ -4,14 +4,13 @@
 #include "Engine/SkeletalMeshSocket.h"
 #include "Projet2Character.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 ACollectible::ACollectible()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	AThisObject = this;
 }
 
 // Called when the game starts or when spawned
@@ -61,6 +60,9 @@ void ACollectible::Pickup(ACharacter* Player)
 
 void ACollectible::Drop()
 {
+	if(AProjet2Character* Player = Cast<AProjet2Character>(OwnerOfTheObject))
+		Player->GetCharacterMovement()->MaxWalkSpeed = 500;
+	
 	SetActorRelativeLocation(FVector(0.0,40.0,0.0));
 	this->DetachFromActor(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
 	SetActorEnableCollision(true);
