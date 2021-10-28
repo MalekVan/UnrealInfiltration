@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AnimClassForPlayer.h"
+#include "Chair.h"
 #include "Collectible.h"
 #include "GameFramework/Character.h"
 #include "Projet2Character.generated.h"
@@ -46,6 +47,7 @@ public:
 	USpringArmComponent* ComponentCameraBoom;
 	
 	ACollectible* HoldedCollectible = nullptr;
+	AChair* LevelChair = nullptr;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool bIsCarry;

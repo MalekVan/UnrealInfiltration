@@ -64,9 +64,6 @@ void AProjet2Character::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
 	
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
-	
 	PlayerInputComponent->BindAction("Interact", IE_Released, this, &AProjet2Character::Interact);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AProjet2Character::MoveForward);
@@ -242,6 +239,11 @@ void AProjet2Character::MoveRight(float Value)
 
 void AProjet2Character::Interact()
 {
+	if(AnimInstanceOfSkeletalMesh->bIsSitting)
+	{
+		LevelChair->SitOnChair(this);
+		return;
+	}
 	// Detection of all AInteractable around the player
 	TArray<AActor*> OverlappingActors = TArray<AActor*>();
 	GetOverlappingActors(OverlappingActors, AInteractable::StaticClass());
