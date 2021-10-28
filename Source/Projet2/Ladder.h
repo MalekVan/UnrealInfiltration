@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Interactable.h"
+#include "Projet2Character.h"
 #include "Ladder.generated.h"
 
 /**
@@ -15,12 +16,9 @@ class PROJET2_API ALadder : public AInteractable
 	GENERATED_BODY()
 	
 public:
-
 	ALadder();
 
 	void Interact(ACharacter* Player) override;
-	
-	void ClimbLadder(ACharacter* Player);
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* StaticMesh;
@@ -29,4 +27,7 @@ public:
 	FVector LowerPosition;
 	UPROPERTY(EditAnywhere)
 	FVector HigherPosition;
+	
+private:	
+	void ClimbLadder(AProjet2Character* Player);
 };

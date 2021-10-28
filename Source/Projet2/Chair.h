@@ -15,16 +15,20 @@ class PROJET2_API AChair : public AInteractable
 	GENERATED_BODY()
 	
 public:
-
 	AChair();
 
 	void Interact(ACharacter* Player) override;
-	
-	void SitOnChair(ACharacter* Player);
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* StaticMesh;
 
 	UPROPERTY(EditAnywhere)
 	FVector SittingPosition;
+	
+private:
+	void SitOnChair(class AProjet2Character* Player);
+	void GetUpFromChair(AProjet2Character* Player);
+
+	FVector OldCameraPos;
+	FRotator OldCameraRot;
 };

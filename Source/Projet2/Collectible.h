@@ -15,13 +15,11 @@ class PROJET2_API ACollectible : public AInteractable
 public:	
 	// Sets default values for this actor's properties
 	ACollectible();
-
-	//Reference to this object
-	ACollectible* AThisObject = nullptr;
-
+	
 	UStaticMeshComponent* StaticMesh;
 
 	ACharacter* OwnerOfTheObject = nullptr;
+	
 	bool bIsCarried = false;
 protected:
 	// Called when the game starts or when spawned

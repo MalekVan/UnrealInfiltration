@@ -7,7 +7,6 @@
 
 UBTDecoratorChasePlayer::UBTDecoratorChasePlayer()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Constructeur du Decorator"));
 	FlowAbortMode = EBTFlowAbortMode::Both;  
 }
 

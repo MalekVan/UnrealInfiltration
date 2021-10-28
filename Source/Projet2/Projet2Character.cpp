@@ -77,10 +77,6 @@ void AProjet2Character::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AProjet2Character::LookUpAtRate);
 
-	// handle touch devices
-	PlayerInputComponent->BindTouch(IE_Pressed, this, &AProjet2Character::TouchStarted);
-	PlayerInputComponent->BindTouch(IE_Released, this, &AProjet2Character::TouchStopped);
-
 	InputComponent->BindAction("Run", IE_Released, this,   &AProjet2Character::RunButtonReleased);
 	InputComponent->BindAction("Run", IE_Pressed, this,   &AProjet2Character::RunButtonPressed);
 
@@ -96,13 +92,8 @@ void AProjet2Character::BeginPlay() {
 	
 	if (ComponentSkeletalMesh)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("ComponentSkeletalMesh found ! "));
 		// Get reference to player anim instance
 		AnimInstanceOfSkeletalMesh = dynamic_cast<UAnimClassForPlayer*>((ComponentSkeletalMesh)? ComponentSkeletalMesh->GetAnimInstance() : nullptr);
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("ComponentSkeletalMesh is empty ! "));
 	}
 
 	// Get reference to camera boom
@@ -227,7 +218,7 @@ void AProjet2Character::Interact()
 {
 	if(AnimInstanceOfSkeletalMesh->bIsSitting)
 	{
-		LevelChair->SitOnChair(this);
+		LevelChair->Interact(this);
 		return;
 	}
 	// Detection of all AInteractable around the player
@@ -271,9 +262,6 @@ void AProjet2Character::Interact()
 				}				
 				InteractableActor->Interact(this);
 			}
-		} else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("No overlapping actors"));
 		}
 		AnimInstanceOfSkeletalMesh->bIsCarry = bIsCarry;
 	} else

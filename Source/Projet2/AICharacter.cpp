@@ -37,11 +37,9 @@ void AAICharacter::OnPerceptionUpdatedDelegate(AActor* Actor, FAIStimulus Stimul
 	UBlackboardComponent* BlackboardComponent = Cast<AMyAIController>(GetController())->GetBlackboardComp();
 
 	AProjet2Character* Character = Cast<AProjet2Character>(Actor);
-	UE_LOG(LogTemp, Warning, TEXT("Perception Update"));
 	if (BlackboardComponent && Character)
 	{		
 		BlackboardComponent->SetValueAsVector(TEXT("PlayerPos"), Stimulus.StimulusLocation);
-		UE_LOG(LogTemp, Warning, TEXT("DETECT PLAYER"));
 
 		bool bNewValue = !BlackboardComponent->GetValueAsBool(TEXT("DetectPlayer"));
 		BlackboardComponent->SetValueAsBool(TEXT("DetectPlayer"), bNewValue);

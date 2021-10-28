@@ -61,6 +61,5 @@ void UProgressWidget::DisplayButtonEndGame()
 
 void UProgressWidget::StartButtonClicked()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Our button is working!"));
 	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 }
