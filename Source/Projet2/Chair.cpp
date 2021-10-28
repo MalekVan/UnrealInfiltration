@@ -2,10 +2,8 @@
 
 
 #include "Chair.h"
-#include "Components/CapsuleComponent.h"
 #include "Projet2Character.h"
 #include "Camera/CameraComponent.h"
-#include "Kismet/KismetMathLibrary.h"
 
 AChair::AChair()
 {
@@ -33,8 +31,8 @@ void AChair::SitOnChair(ACharacter* Player)
 	
 	if(PlayerCharacter->AnimInstanceOfSkeletalMesh->bIsSitting)
 	{
-		PlayerCharacter->SetActorLocation(GetActorLocation() + GetActorRightVector() * 200 + FVector(0,0,60));
-		PlayerCharacter->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		PlayerCharacter->SetActorLocation(GetActorLocation() + GetActorRightVector() * 50 + FVector(0,0,60));
+		PlayerCharacter->SetActorEnableCollision(true);
 
 		PlayerCharacter->AnimInstanceOfSkeletalMesh->bIsSitting = false;
 		PlayerCharacter->bCanMove = true;
@@ -43,11 +41,10 @@ void AChair::SitOnChair(ACharacter* Player)
 	{
 		float Distance = -200.f;
 		
+		PlayerCharacter->bCanMove = false;
 		PlayerCharacter->AnimInstanceOfSkeletalMesh->bIsSitting = true;
 		PlayerCharacter->SetActorEnableCollision(false);
-		PlayerCharacter->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 		
-		PlayerCharacter->bCanMove = false;
 		for (int i=0; i<=100; i++)
 		{
 			Player->SetActorLocation(FMath::Lerp(PlayerLocation, SittingPosition, i/100));

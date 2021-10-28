@@ -90,10 +90,7 @@ void AProjet2Character::SetupPlayerInputComponent(class UInputComponent* PlayerI
 
 void AProjet2Character::BeginPlay() {
 	Super::BeginPlay();
-
 	
-	//ComponentSkeletalMesh = this->FindComponentByClass(new TSubclassOf<UActorComponent>::TClassType<USkeletalMeshComponent>);
-
 	// Get reference to player mesh
 	ComponentSkeletalMesh = GetMesh();
 	
@@ -177,17 +174,6 @@ void AProjet2Character::Tick(float DeltaTime)
 			if (fFuturValueOfZoom >ComponentCameraBoom->TargetArmLength){fFuturValueOfZoom = ComponentCameraBoom->TargetArmLength;}
 		}
 	}
-	
-}
-
-void AProjet2Character::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
-{
-		Jump();
-}
-
-void AProjet2Character::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
-{
-		StopJumping();
 }
 
 void AProjet2Character::TurnAtRate(float Rate)
@@ -252,14 +238,11 @@ void AProjet2Character::Interact()
 	{	
 		if(OverlappingActors.Num() == 1) // If there's only one, interact with it
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Interact1"));
 			AActor* OverlappedActor = *OverlappingActors.GetData();
 			if(AInteractable* InteractableActor = Cast<AInteractable>(OverlappedActor))
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Interact2"));
 				if(OverlappedActor->IsA(ACollectible::StaticClass()))
 				{
-					UE_LOG(LogTemp, Warning, TEXT("Interact3"));
 					HoldedCollectible = Cast<ACollectible>(OverlappedActor);
 					bIsCarry = true;
 				}
