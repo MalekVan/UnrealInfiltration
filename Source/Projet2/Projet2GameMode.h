@@ -6,7 +6,7 @@
 #include "AICharacter.h"
 #include "BotTargetPoint.h"
 #include "SpawnerOfAI.h"
-#include "GameFramework/GameMode.h"
+#include "GameFramework/GameModeBase.h"
 #include "Projet2GameMode.generated.h"
 
 class AGameHUD;
@@ -14,7 +14,7 @@ class ASpawnerOfAI;
 class ABotTargetPoint;
 
 UCLASS()
-class AProjet2GameMode : public AGameMode
+class AProjet2GameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
@@ -35,9 +35,8 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="VariablesGame")
 	int NumberOfEnnemyMax ;
 	int NumberOfEnnemySpawn ;
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="VariablesGame")
     int NumberOfFruitsSpawn ;
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="VariablesGame")
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="VariablesGame")
 	int NumberOfFruitsMax ;
 
 	ASpawnerOfAI* SpawnerIA;
