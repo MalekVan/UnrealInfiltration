@@ -29,7 +29,8 @@ public:
 	void Victory();
 	void Defeat();
 	void ShowMouseForClick();
-	
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="VariablesGame")
 	AGameHUD* GameHUD;
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="VariablesGame")

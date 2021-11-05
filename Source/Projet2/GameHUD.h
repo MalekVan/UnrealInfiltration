@@ -32,13 +32,8 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> ProgressWidgetClass;
-<<<<<<< Updated upstream
-	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
-	TSubclassOf<UUserWidget> InteractWidgetClass;
 	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> AlarmWidgetClass;
-=======
->>>>>>> Stashed changes
 
 	UProgressWidget* ProgressWidget;
 };

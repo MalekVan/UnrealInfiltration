@@ -10,19 +10,11 @@ void AGameHUD::BeginPlay() {
 			ProgressWidget->AddToViewport();
 		}
 	}
-<<<<<<< Updated upstream
+	
 	if (AlarmWidgetClass)
 	{
 		
 	}
-	if (InteractWidgetClass) {
-		InteractWidget = CreateWidget<UProgressWidget>(GetWorld(), InteractWidgetClass);
-		if (InteractWidget) {
-			InteractWidget->AddToViewport();
-		}
-	}
-=======
->>>>>>> Stashed changes
 }
 
 void AGameHUD::Tick(float DeltaTime) {
