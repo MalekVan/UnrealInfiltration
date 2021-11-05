@@ -48,12 +48,16 @@ void AAICharacter::OnPerceptionUpdatedDelegate(AActor* Actor, FAIStimulus Stimul
 
 void AAICharacter::OnStaticMeshBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-
 	if(AProjet2Character* Player = Cast<AProjet2Character>(OtherActor))
 	{
-		UAnimClassForAI* AnimClass = Cast<UAnimClassForAI>(GetMesh()->GetAnimInstance());
-		AnimClass->bWon = true;
-		Cast<AProjet2GameMode>(UGameplayStatics::GetGameMode(GetWorld()))->Defeat();		
+		UBlackboardComponent* BlackboardComponent = Cast<AMyAIController>(GetController())->GetBlackboardComp();
+
+		if (BlackboardComponent && BlackboardComponent->GetValueAsBool("DetectPlayer"))
+		{
+			UAnimClassForAI* AnimClass = Cast<UAnimClassForAI>(GetMesh()->GetAnimInstance());
+			AnimClass->bWon = true;
+			Cast<AProjet2GameMode>(UGameplayStatics::GetGameMode(GetWorld()))->Defeat();		
+		}
 	}
 }
 
