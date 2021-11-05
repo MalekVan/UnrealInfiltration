@@ -96,6 +96,8 @@ void AProjet2Character::BeginPlay() {
 		AnimInstanceOfSkeletalMesh = dynamic_cast<UAnimClassForPlayer*>((ComponentSkeletalMesh)? ComponentSkeletalMesh->GetAnimInstance() : nullptr);
 	}
 
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AProjet2Character::OnStaticMeshBeginOverlap);
+
 	// Get reference to camera boom
 	ComponentCameraBoom = FindComponentByClass<USpringArmComponent>();
 	if(ComponentCameraBoom)
@@ -211,6 +213,14 @@ void AProjet2Character::MoveRight(float Value)
 			// add movement in that direction
 			AddMovementInput(Direction, Value);
 		}
+	}
+}
+
+void AProjet2Character::OnStaticMeshBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	if(Cast<AInteractable>(OverlappedComponent))
+	{
+		GameMode->GameHUD->DisplayInteractMessage();
 	}
 }
 

@@ -29,11 +29,20 @@ public:
 	
 	UFUNCTION()
 	void DisplayVictoryMessage();
+	
+	UFUNCTION()
+	void DisplayInteractMessage();
+
+	UFUNCTION()
+	void HideInteractMessage();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> ProgressWidgetClass;
 	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
+	TSubclassOf<UUserWidget> InteractWidgetClass;
+	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> AlarmWidgetClass;
 
 	UProgressWidget* ProgressWidget;
+	UProgressWidget* InteractWidget;
 };
