@@ -15,6 +15,17 @@ class PROJET2_API AChest : public AInteractable
 	GENERATED_BODY()
 
 	public:
+
+	AChest();
+
+	UPROPERTY(VisibleAnywhere ,BlueprintReadWrite)
+	USceneComponent* RootSComponent;
+
+	UPROPERTY(VisibleAnywhere ,BlueprintReadWrite)
+	UAudioComponent* SoundOfChest;
+
+	UPROPERTY(VisibleAnywhere ,BlueprintReadWrite)
+	UStaticMeshComponent* MeshOfChest;
 	
 	void Interact(ACharacter* Player) override;
 

@@ -4,7 +4,20 @@
 #include "Chest.h"
 
 #include "Projet2Character.h"
+#include "Components/AudioComponent.h"
 #include "Projet2GameMode.h"
+
+AChest::AChest()
+{
+	RootSComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	MeshOfChest = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshChest"));
+	SoundOfChest = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioChest"));
+
+	//oundOfChest->SetAutoActivate(false);
+	
+	//SoundOfChest->AttachTo(RootSComponent);
+	//MeshOfChest->AttachTo(RootSComponent);
+}
 
 void AChest::Interact(ACharacter* Player)
 {
@@ -22,6 +35,10 @@ void AChest::StoreFruit(ACharacter* Actor)
 			Player->HoldedCollectible = nullptr;
 			Player->bIsCarry = false;
 			Player->AnimInstanceOfSkeletalMesh->bIsCarry = Player->bIsCarry;
+			if (SoundOfChest)
+			{
+				SoundOfChest->Play();
+			}
 		}
 	}
 }
