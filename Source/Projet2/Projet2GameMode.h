@@ -32,9 +32,8 @@ public:
 	
 	AGameHUD* GameHUD;
 
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="VariablesGame")
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="VariablesGame")
 	int NumberOfEnnemyMax ;
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="VariablesGame")
 	int NumberOfEnnemySpawn ;
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="VariablesGame")
     int NumberOfFruitsSpawn ;
