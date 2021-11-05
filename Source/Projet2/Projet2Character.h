@@ -13,21 +13,16 @@ UCLASS(config=Game)
 class AProjet2Character : public ACharacter
 {
 	GENERATED_BODY()
-		
-	/** Camera boom positioning the camera behind the character */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* CameraBoom;
-
-	/** Follow camera */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UCameraComponent* FollowCamera;
 
 public:
 	AProjet2Character();
+
+	/** Returns CameraBoom subobject **/
+	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+	/** Returns FollowCamera subobject **/
+	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 	
 	static float GetDistanceBetweenVectors(FVector From, FVector To);
-	
-	//class UAIPerceptionStimuliSourceComponent* StimuliSourceComp;
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
@@ -36,6 +31,14 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
+
+	/** Camera boom positioning the camera behind the character */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class USpringArmComponent* CameraBoom;
+
+	/** Follow camera */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class UCameraComponent* FollowCamera;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USkeletalMeshComponent* ComponentSkeletalMesh;
@@ -55,17 +58,6 @@ public:
 	bool bCanMove = true;
 
 protected:
-	
-	virtual void BeginPlay() override;
-
-	//Controller
-	void UpdateMovementState();
-
-	void RunButtonReleased();
-	void RunButtonPressed();
-
-	void ZoomIn();
-	void ZoomOut();
 
 	//CAMERA VARIABLES
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -77,7 +69,20 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 iSpeedOfWheeling;
 
-	float fFuturValueOfZoom;
+	float fFuturValueOfZoom;	
+	
+	class AProjet2GameMode* GameMode;
+	
+	virtual void BeginPlay() override;
+
+	//Controller
+	void UpdateMovementState();
+
+	void RunButtonReleased();
+	void RunButtonPressed();
+
+	void ZoomIn();
+	void ZoomOut();
 
 	virtual void Tick(float DeltaTime) override;
 
@@ -107,17 +112,8 @@ protected:
 	
 	void Interact();
 
-protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	// End of APawn interface
-
-	class AProjet2GameMode* GameMode;
-
-public:
-	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-	/** Returns FollowCamera subobject **/
-	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 };
 

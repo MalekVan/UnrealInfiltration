@@ -10,6 +10,11 @@ void AGameHUD::BeginPlay() {
 			ProgressWidget->AddToViewport();
 		}
 	}
+	
+	if (AlarmWidgetClass)
+	{
+		
+	}
 }
 
 void AGameHUD::Tick(float DeltaTime) {
@@ -29,6 +34,7 @@ void AGameHUD::DisplayDeathMessage() {
 		ProgressWidget->DisplayDeathMessage();
 	}
 }
+
 void AGameHUD::DisplayVictoryMessage() {
 	if(ProgressWidget)
 	{

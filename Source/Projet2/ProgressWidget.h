@@ -14,10 +14,13 @@ UCLASS()
 class PROJET2_API UProgressWidget : public UUserWidget
 {
 	GENERATED_BODY()
-	
+	bool bDisplayAlarmImage;
+	float fAlarmImageOpacity;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 public:
 	UProgressWidget(const FObjectInitializer& ObjectInitializer);
 
+	
 	virtual void NativeConstruct() override;
 
 	void UpdateProgressWidget(int CurrentScore, int MaxScore);
@@ -25,6 +28,10 @@ public:
 	void DisplayDeathMessage();
 	void DisplayVictoryMessage();
 	void DisplayButtonEndGame();
+	
+	void DisplayAlarmImage();
+	void HideAlarmImage();
+	
 
 	//virtual bool Initialize() override;
 	
@@ -39,6 +46,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	UButton* RestartButton;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BinWidget))
+	UImage* AlarmImage;
 
 	UFUNCTION()
 	void StartButtonClicked();

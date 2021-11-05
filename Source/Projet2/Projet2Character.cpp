@@ -95,7 +95,7 @@ void AProjet2Character::BeginPlay() {
 		// Get reference to player anim instance
 		AnimInstanceOfSkeletalMesh = dynamic_cast<UAnimClassForPlayer*>((ComponentSkeletalMesh)? ComponentSkeletalMesh->GetAnimInstance() : nullptr);
 	}
-
+	
 	// Get reference to camera boom
 	ComponentCameraBoom = FindComponentByClass<USpringArmComponent>();
 	if(ComponentCameraBoom)
