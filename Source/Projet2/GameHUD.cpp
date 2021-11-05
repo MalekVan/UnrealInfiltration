@@ -10,6 +10,12 @@ void AGameHUD::BeginPlay() {
 			ProgressWidget->AddToViewport();
 		}
 	}
+	if (InteractWidgetClass) {
+		InteractWidget = CreateWidget<UProgressWidget>(GetWorld(), InteractWidgetClass);
+		if (InteractWidget) {
+			InteractWidget->AddToViewport();
+		}
+	}
 }
 
 void AGameHUD::Tick(float DeltaTime) {
@@ -29,9 +35,24 @@ void AGameHUD::DisplayDeathMessage() {
 		ProgressWidget->DisplayDeathMessage();
 	}
 }
+
 void AGameHUD::DisplayVictoryMessage() {
 	if(ProgressWidget)
 	{
 		ProgressWidget->DisplayVictoryMessage();
+	}
+}
+
+void AGameHUD::DisplayInteractMessage() {
+	if(InteractWidget)
+	{
+		InteractWidget->SetVisibility(ESlateVisibility::Visible);
+	}
+}
+
+void AGameHUD::HideInteractMessage() {
+	if(InteractWidget)
+	{
+		InteractWidget->SetVisibility(ESlateVisibility::Hidden);
 	}
 }
