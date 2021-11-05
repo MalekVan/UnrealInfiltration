@@ -32,6 +32,8 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> ProgressWidgetClass;
+	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
+	TSubclassOf<UUserWidget> AlarmWidgetClass;
 
 	UProgressWidget* ProgressWidget;
 };

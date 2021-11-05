@@ -8,6 +8,17 @@
 UProgressWidget::UProgressWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {
 }
 
+void UProgressWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+{
+	if (bDisplayAlarmImage)
+	{
+		AlarmImage->SetOpacity(cos(fAlarmImageOpacity));
+		fAlarmImageOpacity += InDeltaTime;
+	}
+	
+}
+
+
 void UProgressWidget::NativeConstruct() {
 	Super::NativeConstruct();
 	if(TXTDeathMessage)
@@ -26,6 +37,11 @@ void UProgressWidget::NativeConstruct() {
 		RestartButton->SetVisibility(ESlateVisibility::Hidden);
 		RestartButton->Visibility = ESlateVisibility::Hidden;
 	}
+	if (AlarmImage)
+	{
+		DisplayAlarmImage();
+	}
+	UE_LOG(LogTemp, Warning, TEXT("AlarmImage %s"), AlarmImage ? TEXT("True") : TEXT("False"));
 }
 
 void UProgressWidget::UpdateProgressWidget(int CurrentScore, int MaxScore) {
@@ -59,7 +75,21 @@ void UProgressWidget::DisplayButtonEndGame()
 	}
 }
 
+void UProgressWidget::DisplayAlarmImage()
+{
+	bDisplayAlarmImage = true;
+	fAlarmImageOpacity = 0;
+}
+
+void UProgressWidget::HideAlarmImage()
+{
+	bDisplayAlarmImage = false;
+	fAlarmImageOpacity = 0;
+}
+
 void UProgressWidget::StartButtonClicked()
 {
 	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 }
+
+

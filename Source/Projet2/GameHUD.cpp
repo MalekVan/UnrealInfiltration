@@ -10,6 +10,10 @@ void AGameHUD::BeginPlay() {
 			ProgressWidget->AddToViewport();
 		}
 	}
+	if (AlarmWidgetClass)
+	{
+		
+	}
 }
 
 void AGameHUD::Tick(float DeltaTime) {
