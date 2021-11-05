@@ -29,20 +29,16 @@ public:
 	
 	UFUNCTION()
 	void DisplayVictoryMessage();
-	
-	UFUNCTION()
-	void DisplayInteractMessage();
-
-	UFUNCTION()
-	void HideInteractMessage();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> ProgressWidgetClass;
+<<<<<<< Updated upstream
 	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> InteractWidgetClass;
 	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> AlarmWidgetClass;
+=======
+>>>>>>> Stashed changes
 
 	UProgressWidget* ProgressWidget;
-	UProgressWidget* InteractWidget;
 };

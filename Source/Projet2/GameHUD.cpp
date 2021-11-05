@@ -10,6 +10,7 @@ void AGameHUD::BeginPlay() {
 			ProgressWidget->AddToViewport();
 		}
 	}
+<<<<<<< Updated upstream
 	if (AlarmWidgetClass)
 	{
 		
@@ -20,6 +21,8 @@ void AGameHUD::BeginPlay() {
 			InteractWidget->AddToViewport();
 		}
 	}
+=======
+>>>>>>> Stashed changes
 }
 
 void AGameHUD::Tick(float DeltaTime) {
@@ -44,19 +47,5 @@ void AGameHUD::DisplayVictoryMessage() {
 	if(ProgressWidget)
 	{
 		ProgressWidget->DisplayVictoryMessage();
-	}
-}
-
-void AGameHUD::DisplayInteractMessage() {
-	if(InteractWidget)
-	{
-		InteractWidget->SetVisibility(ESlateVisibility::Visible);
-	}
-}
-
-void AGameHUD::HideInteractMessage() {
-	if(InteractWidget)
-	{
-		InteractWidget->SetVisibility(ESlateVisibility::Hidden);
 	}
 }
