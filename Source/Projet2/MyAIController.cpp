@@ -118,7 +118,7 @@ void AMyAIController::RepeatingFunction()
 	if (--RepeatingCallsRemaining <= 0)
 	{
 		GetWorldTimerManager().ClearTimer(FuzeTimerHandle);
-		RepeatingCallsRemaining = 30;
+		RepeatingCallsRemaining = 50;
 		// MemberTimerHandle can now be reused for any other Timer.
 	}
 

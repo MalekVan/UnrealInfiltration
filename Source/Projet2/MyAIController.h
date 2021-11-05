@@ -32,7 +32,7 @@ class PROJET2_API AMyAIController : public AAIController
 
 	FTimerHandle FuzeTimerHandle;
 
-	int32 RepeatingCallsRemaining = 30; // 30 = 3 second.
+	int32 RepeatingCallsRemaining = 50; // 30 = 3 second.
 	
 	/*Posses is executed when the character we want to control is spawned.
 	Inside this function, we initialize the blackboard and start the behavior tree*/
