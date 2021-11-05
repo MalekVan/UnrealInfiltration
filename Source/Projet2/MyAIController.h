@@ -29,7 +29,11 @@ class PROJET2_API AMyAIController : public AAIController
 	/*All targets point availables in the level*/
 	TArray<AActor*> BotTargetPoints;
 
- 
+
+	FTimerHandle FuzeTimerHandle;
+
+	int32 RepeatingCallsRemaining = 30; // 30 = 3 second.
+	
 	/*Posses is executed when the character we want to control is spawned.
 	Inside this function, we initialize the blackboard and start the behavior tree*/
 	virtual void OnPossess(APawn* Pawn) override;
@@ -37,7 +41,12 @@ class PROJET2_API AMyAIController : public AAIController
 	virtual class ABotTargetPoint* GetRandomPointEmpty();
 	virtual ABotTargetPoint* GetRandomPoint();
 
-	public:
+	void RepeatingFunction();
+
+public:
+
+	void LaunchFollowPlayerTimer();
+	
 	TArray<ABotTargetPoint*> ListOfDestinationPoints;
 
 

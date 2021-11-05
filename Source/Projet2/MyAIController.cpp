@@ -107,3 +107,23 @@ ABotTargetPoint* AMyAIController::GetRandomPoint()
 	return Cast<ABotTargetPoint>(BotTargetPoints[RandomIndex]);
 }
 
+void AMyAIController::LaunchFollowPlayerTimer()
+{
+	GetWorldTimerManager().SetTimer(FuzeTimerHandle, this, &AMyAIController::RepeatingFunction, 0.1f, true, 0.0f);
+}
+
+void AMyAIController::RepeatingFunction()
+{
+	// Once we've called this function enough times, clear the Timer.
+	if (--RepeatingCallsRemaining <= 0)
+	{
+		GetWorldTimerManager().ClearTimer(FuzeTimerHandle);
+		RepeatingCallsRemaining = 30;
+		// MemberTimerHandle can now be reused for any other Timer.
+	}
+
+	FVector PosPlayer = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)->GetActorLocation();
+	BlackboardComp->SetValueAsVector("PlayerPos", PosPlayer);
+	
+	// Do something here...
+}

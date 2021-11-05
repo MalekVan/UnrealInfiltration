@@ -17,6 +17,9 @@ EBTNodeResult::Type UBTChasePlayer::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	{
 		AICon->GetCharacter()->GetCharacterMovement()->MaxWalkSpeed = 400;
 	}
+
+	//Ajout paul :
+	Controller->LaunchFollowPlayerTimer();
 	
 	FVector PlayerLocation = BBComp->GetValueAsVector("PlayerPos");
 	OwnerComp.GetBlackboardComponent()->SetValueAsBool("WasChasing", true);
