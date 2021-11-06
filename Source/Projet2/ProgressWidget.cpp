@@ -23,23 +23,36 @@ void UProgressWidget::NativeConstruct() {
 	Super::NativeConstruct();
 	if(TXTDeathMessage)
 	{
-		TXTDeathMessage->SetText(FText::FromString("Game Over"));
+		TXTDeathMessage->SetText(FText::FromString("Defeat"));
 		TXTDeathMessage->SetVisibility(ESlateVisibility::Hidden);
 	}
 	if(TXTVictoryMessage)
 	{
-		TXTVictoryMessage->SetText(FText::FromString("Victory !"));
+		TXTVictoryMessage->SetText(FText::FromString("Victory"));
 		TXTVictoryMessage->SetVisibility(ESlateVisibility::Hidden);
 	}
 	if (RestartButton)
 	{
 		RestartButton->OnClicked.AddDynamic(this, &UProgressWidget::StartButtonClicked);
 		RestartButton->SetVisibility(ESlateVisibility::Hidden);
-		RestartButton->Visibility = ESlateVisibility::Hidden;
+	}
+	if (MainMenuButton)
+	{
+		MainMenuButton->OnClicked.AddDynamic(this, &UProgressWidget::MainMenuButtonClick);
+		MainMenuButton->SetVisibility(ESlateVisibility::Hidden);
 	}
 	if (AlarmImage)
 	{
 		DisplayAlarmImage();
+	}
+
+	if (ImageDefeat)
+	{
+		ImageDefeat->SetVisibility(ESlateVisibility::Hidden);
+	}
+	if (ImageVictory)
+	{
+		ImageVictory->SetVisibility(ESlateVisibility::Hidden);
 	}
 	UE_LOG(LogTemp, Warning, TEXT("AlarmImage %s"), AlarmImage ? TEXT("True") : TEXT("False"));
 }
@@ -73,6 +86,14 @@ void UProgressWidget::DisplayButtonEndGame()
 	{
 		RestartButton->SetVisibility(ESlateVisibility::Visible);
 	}
+	if (MainMenuButton)
+	{
+		MainMenuButton->SetVisibility(ESlateVisibility::Visible);
+	}
+	if (PBProgressBar)
+	{
+		PBProgressBar->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 
 void UProgressWidget::DisplayAlarmImage()
@@ -90,6 +111,11 @@ void UProgressWidget::HideAlarmImage()
 void UProgressWidget::StartButtonClicked()
 {
 	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+}
+
+void UProgressWidget::MainMenuButtonClick()
+{
+	UGameplayStatics::OpenLevel(this, FName("MainMenu"), false);
 }
 
 
