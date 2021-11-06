@@ -29,7 +29,6 @@ AAICharacter::AAICharacter()
 void AAICharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void AAICharacter::OnPerceptionUpdatedDelegate(AActor* Actor, FAIStimulus Stimulus)
