@@ -14,12 +14,13 @@ UCLASS()
 class PROJET2_API UProgressWidget : public UUserWidget
 {
 	GENERATED_BODY()
-	bool bDisplayAlarmImage;
-	float fAlarmImageOpacity;
-	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+	
 public:
 	UProgressWidget(const FObjectInitializer& ObjectInitializer);
-
+	
+	bool bDisplayAlarmImage ;
+	float fAlarmImageOpacity;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	
 	virtual void NativeConstruct() override;
 
@@ -34,12 +35,6 @@ public:
 	
 
 	//virtual bool Initialize() override;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UTextBlock* TXTDeathMessage;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	UTextBlock* TXTVictoryMessage;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	UProgressBar* PBProgressBar;

@@ -3,6 +3,8 @@
 #include "BTStopChasePlayer.h"
 #include "MyAIController.h"
 #include "AICharacter.h"
+#include "GameHUD.h"
+#include "Projet2GameMode.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -24,6 +26,12 @@ EBTNodeResult::Type UBTStopChasePlayer::ExecuteTask(UBehaviorTreeComponent& Owne
 				OwnerComp.GetBlackboardComponent()->SetValueAsBool("GoBackToBase", true);
 			}
 		}
+		
+		if (AProjet2GameMode* gameM = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode()))
+		{
+			gameM->GameHUD->ProgressWidget->bDisplayAlarmImage = false;
+		}
+		
 		return EBTNodeResult::Succeeded;
 		
 	}	

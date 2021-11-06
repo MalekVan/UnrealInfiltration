@@ -15,22 +15,11 @@ void UProgressWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		AlarmImage->SetOpacity(cos(fAlarmImageOpacity));
 		fAlarmImageOpacity += InDeltaTime;
 	}
-	
 }
 
 
 void UProgressWidget::NativeConstruct() {
 	Super::NativeConstruct();
-	if(TXTDeathMessage)
-	{
-		TXTDeathMessage->SetText(FText::FromString("Defeat"));
-		TXTDeathMessage->SetVisibility(ESlateVisibility::Hidden);
-	}
-	if(TXTVictoryMessage)
-	{
-		TXTVictoryMessage->SetText(FText::FromString("Victory"));
-		TXTVictoryMessage->SetVisibility(ESlateVisibility::Hidden);
-	}
 	if (RestartButton)
 	{
 		RestartButton->OnClicked.AddDynamic(this, &UProgressWidget::StartButtonClicked);
@@ -54,6 +43,9 @@ void UProgressWidget::NativeConstruct() {
 	{
 		ImageVictory->SetVisibility(ESlateVisibility::Hidden);
 	}
+
+	bDisplayAlarmImage = false;
+	
 	UE_LOG(LogTemp, Warning, TEXT("AlarmImage %s"), AlarmImage ? TEXT("True") : TEXT("False"));
 }
 
@@ -64,22 +56,14 @@ void UProgressWidget::UpdateProgressWidget(int CurrentScore, int MaxScore) {
 
 void UProgressWidget::DisplayDeathMessage()
 {
-	if(TXTDeathMessage)
-	{		
-		TXTDeathMessage->SetVisibility(ESlateVisibility::Visible);
-		ImageDefeat->SetVisibility(ESlateVisibility::Visible);
-		DisplayButtonEndGame();
-	}
+	ImageDefeat->SetVisibility(ESlateVisibility::Visible);
+	DisplayButtonEndGame();
 }
 
 void UProgressWidget::DisplayVictoryMessage()
 {
-	if(TXTVictoryMessage)
-	{		
-		TXTVictoryMessage->SetVisibility(ESlateVisibility::Visible);
-		ImageVictory->SetVisibility(ESlateVisibility::Visible);
-		DisplayButtonEndGame();
-	}
+	ImageVictory->SetVisibility(ESlateVisibility::Visible);
+	DisplayButtonEndGame();
 }
 
 void UProgressWidget::DisplayButtonEndGame()

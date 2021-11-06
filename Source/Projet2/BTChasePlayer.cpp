@@ -4,6 +4,8 @@
 #include "BTChasePlayer.h"
 #include "MyAIController.h"
 #include "AICharacter.h"
+#include "GameHUD.h"
+#include "Projet2GameMode.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
@@ -23,7 +25,12 @@ EBTNodeResult::Type UBTChasePlayer::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	
 	FVector PlayerLocation = BBComp->GetValueAsVector("PlayerPos");
 	OwnerComp.GetBlackboardComponent()->SetValueAsBool("WasChasing", true);
-
+	
+	if (AProjet2GameMode* gameM = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode()))
+	{
+		gameM->GameHUD->ProgressWidget->bDisplayAlarmImage = true;
+	}
+	
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(Controller, PlayerLocation);
 	FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 	return EBTNodeResult::Succeeded;
