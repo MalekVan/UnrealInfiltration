@@ -67,6 +67,7 @@ void UProgressWidget::DisplayDeathMessage()
 	if(TXTDeathMessage)
 	{		
 		TXTDeathMessage->SetVisibility(ESlateVisibility::Visible);
+		ImageDefeat->SetVisibility(ESlateVisibility::Visible);
 		DisplayButtonEndGame();
 	}
 }
@@ -76,6 +77,7 @@ void UProgressWidget::DisplayVictoryMessage()
 	if(TXTVictoryMessage)
 	{		
 		TXTVictoryMessage->SetVisibility(ESlateVisibility::Visible);
+		ImageVictory->SetVisibility(ESlateVisibility::Visible);
 		DisplayButtonEndGame();
 	}
 }
