@@ -46,10 +46,21 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	UButton* RestartButton;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+    UButton* MainMenuButton;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BinWidget))
 	UImage* AlarmImage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UImage* ImageVictory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UImage* ImageDefeat;
+
 	UFUNCTION()
 	void StartButtonClicked();
+	UFUNCTION()
+	void MainMenuButtonClick();
 };
