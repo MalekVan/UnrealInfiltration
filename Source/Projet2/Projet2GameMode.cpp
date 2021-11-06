@@ -60,6 +60,9 @@ void AProjet2GameMode::Victory()
 			Cast<UAnimClassForAI>(IAEnemy->GetMesh()->GetAnimInstance())->bLost = true;
 			IAEnemy->GetCharacterMovement()->MaxWalkSpeed = 0.0;;
 			IAEnemy->GetCharacterMovement()->Velocity = FVector(0.0,0.0,0.0);
+			
+			IAEnemy->PerceptionComponent->SetActive(false);
+			IAEnemy->GetController()->UnPossess();
 		}
 	}
 
@@ -85,6 +88,9 @@ void AProjet2GameMode::Defeat()
 			Cast<UAnimClassForAI>(IAEnemy->GetMesh()->GetAnimInstance())->bWon = true;
 			IAEnemy->GetCharacterMovement()->MaxWalkSpeed = 0.0;;
 			IAEnemy->GetCharacterMovement()->Velocity = FVector(0.0,0.0,0.0);
+
+			IAEnemy->PerceptionComponent->SetActive(false);
+			IAEnemy->GetController()->UnPossess();
 		}
 	}
 	GameHUD->DisplayDeathMessage();
@@ -107,7 +113,7 @@ void AProjet2GameMode::MakeCheckForSpawn()
 	{
 		SpawnIA();
 		NumberOfEnnemySpawn++;
-		MakeCheckForSpawn();
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &AProjet2GameMode::MakeCheckForSpawn, 2.0f, false);
 	}	
 }
 
