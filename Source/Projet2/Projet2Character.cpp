@@ -99,7 +99,7 @@ void AProjet2Character::BeginPlay() {
 	// Get reference to camera boom
 	ComponentCameraBoom = FindComponentByClass<USpringArmComponent>();
 	if(ComponentCameraBoom)
-	{		
+	{
 		// Setup camera arm value
 		fFuturValueOfZoom = ComponentCameraBoom->TargetArmLength;
 	}
