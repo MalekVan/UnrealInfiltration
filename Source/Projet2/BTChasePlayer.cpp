@@ -28,7 +28,7 @@ EBTNodeResult::Type UBTChasePlayer::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	
 	if (AProjet2GameMode* gameM = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode()))
 	{
-		gameM->GameHUD->ProgressWidget->bDisplayAlarmImage = true;
+		gameM->GameHUD->ProgressWidget->DisplayAlarmImage();
 	}
 	
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(Controller, PlayerLocation);

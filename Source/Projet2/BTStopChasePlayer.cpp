@@ -29,7 +29,7 @@ EBTNodeResult::Type UBTStopChasePlayer::ExecuteTask(UBehaviorTreeComponent& Owne
 		
 		if (AProjet2GameMode* gameM = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode()))
 		{
-			gameM->GameHUD->ProgressWidget->bDisplayAlarmImage = false;
+			gameM->GameHUD->ProgressWidget->HideAlarmImage();
 		}
 		
 		return EBTNodeResult::Succeeded;
