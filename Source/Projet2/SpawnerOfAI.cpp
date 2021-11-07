@@ -18,12 +18,18 @@ void ASpawnerOfAI::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	AProjet2GameMode* GameMode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
-	GameMode->SpawnerIA = this;
-	GameMode->MakeCheckForSpawn();
+	//Wait 2second before first spawn
+	GetWorldTimerManager().SetTimer(TimerHandle2, this, &ASpawnerOfAI::FirstTcheckForSpawn, 2.0f, false);
 
 	//After one minute, there is one more AI
 	GetWorldTimerManager().SetTimer(TimerHandle, this, &ASpawnerOfAI::IncreaseNumberMaxOfAI, 60.0f, false);
+}
+
+void ASpawnerOfAI::FirstTcheckForSpawn()
+{
+	AProjet2GameMode* GameMode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
+	GameMode->SpawnerIA = this;
+	GameMode->MakeCheckForSpawn();
 }
 
 // Called every frame
