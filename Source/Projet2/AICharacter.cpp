@@ -33,16 +33,24 @@ void AAICharacter::BeginPlay()
 
 void AAICharacter::OnPerceptionUpdatedDelegate(AActor* Actor, FAIStimulus Stimulus)
 {
-	UBlackboardComponent* BlackboardComponent = Cast<AMyAIController>(GetController())->GetBlackboardComp();
+	AMyAIController* Aicontroll = Cast<AMyAIController>(GetController());
+	
+	if (Aicontroll)
+	{
+		UBlackboardComponent* BlackboardComponent = Cast<AMyAIController>(GetController())->GetBlackboardComp();
+		AProjet2Character* Character = Cast<AProjet2Character>(Actor);
+		
+		if (BlackboardComponent && Character)
+		{		
+			BlackboardComponent->SetValueAsVector(TEXT("PlayerPos"), Stimulus.StimulusLocation);
 
-	AProjet2Character* Character = Cast<AProjet2Character>(Actor);
-	if (BlackboardComponent && Character)
-	{		
-		BlackboardComponent->SetValueAsVector(TEXT("PlayerPos"), Stimulus.StimulusLocation);
-
-		bool bNewValue = !BlackboardComponent->GetValueAsBool(TEXT("DetectPlayer"));
-		BlackboardComponent->SetValueAsBool(TEXT("DetectPlayer"), bNewValue);
+			bool bNewValue = !BlackboardComponent->GetValueAsBool(TEXT("DetectPlayer"));
+			BlackboardComponent->SetValueAsBool(TEXT("DetectPlayer"), bNewValue);
+		}
 	}
+	
+
+	
 }
 
 void AAICharacter::OnStaticMeshBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)

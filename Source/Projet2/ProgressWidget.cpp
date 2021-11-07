@@ -92,10 +92,6 @@ void UProgressWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	if (bDisplayAlarmImage)
 	{
 		AlarmImage->SetOpacity(cos(GetWorld()->GetTimeSeconds() * 5)/2 + 0.5 );
-		if(GEngine)
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("World delta for current frame equals %f"),cos(GetWorld()->GetTimeSeconds())/2 + 1));
-		//fAlarmImageOpacity += InDeltaTime;
-		//UE_LOG(LogTemp, Warning, TEXT("AlarmImage %s"), AlarmImage->GetRenderOpacity());
 	}
 }
 
