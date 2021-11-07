@@ -21,6 +21,16 @@ void UProgressWidget::NativeConstruct() {
 		MainMenuButton->OnClicked.AddDynamic(this, &UProgressWidget::MainMenuButtonClick);
 		MainMenuButton->SetVisibility(ESlateVisibility::Hidden);
 	}
+	if (MainMenuButton2)
+	{
+		MainMenuButton2->OnClicked.AddDynamic(this, &UProgressWidget::MainMenuButtonClick);
+		MainMenuButton2->SetVisibility(ESlateVisibility::Hidden);
+	}
+	if (ResumeButton)
+	{
+		ResumeButton->OnClicked.AddDynamic(this, &UProgressWidget::ResumeGame);
+		ResumeButton->SetVisibility(ESlateVisibility::Hidden);
+	}
 	if (AlarmImage)
 	{
 		DisplayAlarmImage();
@@ -48,12 +58,16 @@ void UProgressWidget::UpdateProgressWidget(int CurrentScore, int MaxScore) {
 void UProgressWidget::DisplayDeathMessage()
 {
 	ImageDefeat->SetVisibility(ESlateVisibility::Visible);
+	PBProgressBar->SetVisibility(ESlateVisibility::Hidden);
+	ImageProgressBar->SetVisibility(ESlateVisibility::Hidden);
 	DisplayButtonEndGame();
 }
 
 void UProgressWidget::DisplayVictoryMessage()
 {
 	ImageVictory->SetVisibility(ESlateVisibility::Visible);
+	PBProgressBar->SetVisibility(ESlateVisibility::Hidden);
+	ImageProgressBar->SetVisibility(ESlateVisibility::Hidden);
 	DisplayButtonEndGame();
 }
 
@@ -103,6 +117,22 @@ void UProgressWidget::StartButtonClicked()
 void UProgressWidget::MainMenuButtonClick()
 {
 	UGameplayStatics::OpenLevel(this, FName("MainMenu"), false);
+}
+
+void UProgressWidget::DisplayPauseMenu()
+{
+	MainMenuButton2->SetVisibility(ESlateVisibility::Visible);
+	ResumeButton->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UProgressWidget::ResumeGame()
+{
+	MainMenuButton2->SetVisibility(ESlateVisibility::Hidden);
+	ResumeButton->SetVisibility(ESlateVisibility::Hidden);	
+	GetWorld()->GetFirstPlayerController()->bShowMouseCursor = false;
+	GetWorld()->GetFirstPlayerController()->bEnableClickEvents = false;
+	GetWorld()->GetFirstPlayerController()->bEnableMouseOverEvents = false;
+	UGameplayStatics::SetGamePaused(GetWorld(), false);
 }
 
 

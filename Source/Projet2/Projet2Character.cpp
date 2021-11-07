@@ -65,6 +65,7 @@ void AProjet2Character::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	check(PlayerInputComponent);
 	
 	PlayerInputComponent->BindAction("Interact", IE_Released, this, &AProjet2Character::Interact);
+	PlayerInputComponent->BindAction("PauseMenu", IE_Pressed, this, &AProjet2Character::PauseMenu);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AProjet2Character::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AProjet2Character::MoveRight);
@@ -212,6 +213,15 @@ void AProjet2Character::MoveRight(float Value)
 			AddMovementInput(Direction, Value);
 		}
 	}
+}
+
+void AProjet2Character::PauseMenu()
+{
+	GameMode->GameHUD->ProgressWidget->DisplayPauseMenu();
+	GetWorld()->GetFirstPlayerController()->bShowMouseCursor = true;
+	GetWorld()->GetFirstPlayerController()->bEnableClickEvents = true;
+	GetWorld()->GetFirstPlayerController()->bEnableMouseOverEvents = true;
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
 }
 
 void AProjet2Character::Interact()

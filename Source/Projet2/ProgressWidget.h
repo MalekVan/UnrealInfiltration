@@ -33,6 +33,8 @@ public:
 	void DisplayAlarmImage();
 	void HideAlarmImage();
 	
+	void DisplayPauseMenu();
+	
 
 	//virtual bool Initialize() override;
 	
@@ -44,6 +46,12 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
     UButton* MainMenuButton;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	UButton* MainMenuButton2;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	UButton* ResumeButton;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	UImage* AlarmImage;
@@ -54,8 +62,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	UImage* ImageDefeat;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	UImage* ImageProgressBar;
+
 	UFUNCTION()
 	void StartButtonClicked();
 	UFUNCTION()
-	void MainMenuButtonClick();
+	void MainMenuButtonClick();	
+	UFUNCTION()
+	void ResumeGame();
 };
