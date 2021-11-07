@@ -31,4 +31,6 @@ void ABotTargetPoint::SpawnFruitOnPoint()
 	AProjet2GameMode* GameMode = Cast<AProjet2GameMode>(GetWorld()->GetAuthGameMode());
 	FActorSpawnParameters SpawnInfo;
 	GetWorld()->SpawnActor<ACollectible>(GameMode->CollectibleClass, GetActorLocation(), FRotator(0.0,0.0,0.0), SpawnInfo);
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "point spawn at start :" + this->GetName());
+	bFruitOnThisTargetPoint = true;
 }

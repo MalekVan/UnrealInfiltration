@@ -59,9 +59,11 @@ void AMyAIController::OnPossess(APawn* InPawn)
 				BlackboardComp->SetValueAsBool("HaveFruitInHands", true);
 				BlackboardComp->SetValueAsObject("FruitPosition", AIChar->Fruit);
 			}
+			
 			ABotTargetPoint* TempEmptyPoint = GetRandomPointEmpty();
 			if (TempEmptyPoint)
 			{
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TempEmptyPoint->GetName());
 				ListOfDestinationPoints.Add(TempEmptyPoint);
 				TempEmptyPoint->bFruitOnThisTargetPoint =true;
 			}
@@ -79,8 +81,8 @@ void AMyAIController::OnPossess(APawn* InPawn)
 
 ABotTargetPoint* AMyAIController::GetRandomPointEmpty()
 {
-
 	TArray<ABotTargetPoint*> ListFreeTemp;
+	
 	for (int i = 0; i < BotTargetPoints.Num(); i++)
 	{
 		ABotTargetPoint* tempPoint = Cast<ABotTargetPoint>(BotTargetPoints[i]);

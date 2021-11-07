@@ -18,8 +18,10 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
+	void FirstTcheckForSpawn();
+
 	FTimerHandle TimerHandle;
+	FTimerHandle TimerHandle2;
 	void IncreaseNumberMaxOfAI();
 	
 	
